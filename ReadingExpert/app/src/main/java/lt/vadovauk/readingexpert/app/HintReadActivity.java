@@ -27,7 +27,7 @@ public class HintReadActivity extends Activity implements
 
         btnSpeak = (Button) findViewById(R.id.btnSpeak);
 
-        txtText = (TextView) findViewById(R.id.txtText);
+        txtText = (TextView) findViewById(R.id.txtText); // Query current question answer
 
         // button on click event
         btnSpeak.setOnClickListener(new View.OnClickListener() {
