@@ -8,4 +8,7 @@
     <item android:id="@+id/action_crossword_test"
           android:title="@string/title_activity_crossword"
           android:showAsAction="never" />
+    <item android:id="@+id/action_quiz_test"
+          android:title="@string/title_activity_quiz"
+          android:showAsAction="never" />
 </menu>

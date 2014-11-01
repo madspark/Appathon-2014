@@ -9,19 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-
 import com.loopj.android.http.JsonHttpResponseHandler;
-
+import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
+import lt.vadovauk.readingexpert.app.common.NetworkClient;
+import lt.vadovauk.readingexpert.app.domain.Story;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
-import lt.vadovauk.readingexpert.app.common.NetworkClient;
-import lt.vadovauk.readingexpert.app.domain.Story;
 
 public class MainActivity extends Activity {
     Context context = MainActivity.this;
@@ -60,6 +57,9 @@ public class MainActivity extends Activity {
             return true;
         } else if (id == R.id.action_crossword_test) {
             Intent intent = new Intent(this, CrosswordActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.action_quiz_test) {
+            Intent intent = new Intent(this, QuizActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
