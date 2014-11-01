@@ -82,13 +82,13 @@ public class MainActivity extends Activity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject storyJSON = response.getJSONObject(i);
-                        String id = storyJSON.getString("id");
+                        int apiid = Integer.parseInt(storyJSON.getString("id"));
                         int difficulty = Integer.parseInt(storyJSON.getString("difficulty"));
                         String content = storyJSON.getString("content");
                         String title = storyJSON.getString("title");
                         String description = storyJSON.getString("description");
 
-                        Story story = new Story(title, description, difficulty, content, null);
+                        Story story = new Story(apiid, title, description, difficulty, content, null);
                         stories.add(story);
                         story.insertIntoDb(context);
 

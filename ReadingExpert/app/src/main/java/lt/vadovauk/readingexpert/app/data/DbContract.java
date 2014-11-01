@@ -6,6 +6,8 @@ public class DbContract {
 
         public static final String TABLE_NAME = "Stories";
 
+        public static final String COLUMN_APIID = "apiid";
+
         public static final String COLUMN_TITLE = "title";
 
         public static final String COLUMN_ID = "id";
