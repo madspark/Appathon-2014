@@ -25,7 +25,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 " (" +
                 DbContract.Story.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 DbContract.Story.COLUMN_DIFF + " INTEGER NOT NULL, " +
-                DbContract.Story.COLUMN_IMG + " TEXT NOT NULL, " +
+                DbContract.Story.COLUMN_IMG + " TEXT, " +
                 DbContract.Story.COLUMN_CONTENT + " TEXT NOT NULL, " +
                 DbContract.Story.COLUMN_TITLE + " TEXT NOT NULL, " +
                 DbContract.Story.COLUMN_DONE + " BOOL, " +
