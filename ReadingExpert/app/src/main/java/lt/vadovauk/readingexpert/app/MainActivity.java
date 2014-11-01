@@ -23,7 +23,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         ArrayList<Story> stories = new ArrayList<Story>();
-        GridView mGridView = (GridView)findViewById(R.id.gridView);
+        Story testStory = new Story("asdasd", "description", 4, "once upon a time");
+        stories.add(testStory);
+        stories.add(testStory);
+        stories.add(testStory);
+        GridView mGridView = (GridView) findViewById(R.id.gridView);
         mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
     }
 

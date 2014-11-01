@@ -19,6 +19,7 @@
         android:id="@+id/gridView"
         android:layout_below="@id/expl_text"
         android:layout_width="match_parent"
+        android:numColumns="2"
         android:layout_height="match_parent"></GridView>
 
 </RelativeLayout>

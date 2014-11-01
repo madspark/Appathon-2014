@@ -17,8 +17,10 @@ import lt.vadovauk.readingexpert.app.domain.Story;
 public class GridViewAdapter extends BaseAdapter {
 
     private final LayoutInflater inflater;
+    private ArrayList<Story> stories;
 
     public GridViewAdapter(Activity activity, ArrayList<Story> stories) {
+        this.stories = stories;
 
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -26,7 +28,7 @@ public class GridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return stories.size();
     }
 
     @Override
