@@ -5,6 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
+
+import java.util.ArrayList;
+
+import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
+import lt.vadovauk.readingexpert.app.domain.Story;
+
 
 public class MainActivity extends Activity {
 
@@ -12,8 +19,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+        ArrayList<Story> stories = new ArrayList<Story>();
+        GridView mGridView = (GridView)findViewById(R.id.gridView);
+        mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
