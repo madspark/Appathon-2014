@@ -38,7 +38,7 @@ public class ReadActivity extends Activity {
                             readLineTxt.setText(lines.get(line));
                             line++;
                         } else {
-                            Intent intent = new Intent(ReadActivity.this, ResultActivity.class);
+                            Intent intent = new Intent(ReadActivity.this, HintReadActivity.class);
                             startActivity(intent);
                             timer.cancel();
                             finish();
