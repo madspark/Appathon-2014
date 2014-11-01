@@ -3,7 +3,6 @@ package lt.vadovauk.readingexpert.app;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,15 +33,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
-        int questionsVersion = sharedPrefs.getInt(getString(R.string.questions_revision), 0);
-        if (questionsVersion == 0) {
-            //TODO download data from the db and insert to local storage
-            getStories();
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            editor.putInt(getString(R.string.questions_revision), 1);
-            editor.apply();
-        }
+
+        getStories();
+
 
         mGridView = (GridView) findViewById(R.id.gridView);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,21 +79,20 @@ public class MainActivity extends Activity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject storyJSON = response.getJSONObject(i);
-                        int apiid = Integer.parseInt(storyJSON.getString("id"));
+                        int apiId = Integer.parseInt(storyJSON.getString("id"));
                         int difficulty = Integer.parseInt(storyJSON.getString("difficulty"));
                         String content = storyJSON.getString("content");
                         String title = storyJSON.getString("title");
                         String description = storyJSON.getString("description");
 
-                        Story story = new Story(apiid, title, description, difficulty, content, null);
+                        Story story = new Story(apiId, title, description, difficulty, content, null);
                         stories.add(story);
                         story.insertIntoDb(context);
 
-                        mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
+                        setGridView(stories);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
 
             }
@@ -110,5 +102,9 @@ public class MainActivity extends Activity {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+    private void setGridView(ArrayList<Story> stories) {
+        mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
     }
 }
