@@ -1,5 +1,6 @@
 require 'grape'
 require 'json'
+require 'mysql'
 
 module ReadingExpert
   class API < Grape::API
@@ -8,7 +9,19 @@ module ReadingExpert
     format :json
 
     def self.get_all_stories
-      stories = [{id: 123, title: "Lion"}, {id: 124, title: "Snake"}]
+      begin
+        db = Mysql.real_connect('localhost', 'rails', 'kXI6cjTJCO', 'rails')
+        results = db.query('SELECT * FROM Stories')
+
+        response = []
+        results.each_hash do |row|
+          response.push(row)
+        end
+        response
+
+      ensure
+        db.close       
+      end
     end
 
     resource :stories do
