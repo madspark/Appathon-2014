@@ -8,9 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import lt.vadovauk.readingexpert.app.data.DbContract;
 import lt.vadovauk.readingexpert.app.data.DbHelper;
 
-/**
- * Created by Mantas-PC on 01/11/2014.
- */
 public class Story {
     private String title;
     private String description;
@@ -20,23 +17,24 @@ public class Story {
     private boolean done;
 
     public Story(String title, String description, int difficulty,
-                 String content, String imageSource, boolean done) {
+                 String content, String imageSource) {
         this.title = title;
         this.description = description;
         this.difficulty = difficulty;
         this.content = content;
         this.imageSource = imageSource;
-        this.done = done;
+        this.done = false;
     }
 
     public String getContent() {
         return content;
     }
+
     public String getImageSource() {
         return imageSource;
     }
 
-    public void setImageSource(String source){
+    public void setImageSource(String source) {
         this.imageSource = source;
     }
 
@@ -68,7 +66,7 @@ public class Story {
         this.title = title;
     }
 
-    public void insertIntoDb(Context context){
+    public void insertIntoDb(Context context) {
         ContentValues cv = new ContentValues();
         cv.put(DbContract.Story.COLUMN_TITLE, title);
         cv.put(DbContract.Story.COLUMN_DIFF, difficulty);
@@ -107,7 +105,7 @@ public class Story {
         imageSource = c.getString(c.getColumnIndex(DbContract.Story.COLUMN_IMG));
         done = 1 == c.getInt(c.getColumnIndex(DbContract.Story.COLUMN_DONE));
 
-        return new Story(title, description, difficulty, content, imageSource, done);
+        return new Story(title, description, difficulty, content, imageSource);
 
     }
 
