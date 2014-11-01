@@ -5,10 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.Serializable;
+
 import lt.vadovauk.readingexpert.app.data.DbContract;
 import lt.vadovauk.readingexpert.app.data.DbHelper;
 
-public class Story {
+public class Story implements Serializable {
     private String title;
     private String description;
     private int difficulty; //wpm

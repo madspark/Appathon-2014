@@ -45,6 +45,7 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
+                intent.putExtra("story", stories.get(position));
                 startActivity(intent);
             }
         });
