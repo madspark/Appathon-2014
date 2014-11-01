@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import lt.vadovauk.readingexpert.app.domain.Story;
 
@@ -18,6 +21,9 @@ public class PreReadActivity extends Activity {
         setContentView(R.layout.activity_pre_read);
 
         story = (Story) getIntent().getSerializableExtra("story");
+
+        ImageView storyImg = (ImageView) findViewById(R.id.story_img);
+        Picasso.with(this).load(story.getImageSource()).into(storyImg);
 
         TextView storyTitleTxt = (TextView) findViewById(R.id.story_title_txt);
         storyTitleTxt.setText(story.getTitle());

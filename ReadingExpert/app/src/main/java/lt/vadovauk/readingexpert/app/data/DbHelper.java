@@ -25,12 +25,12 @@ public class DbHelper extends SQLiteOpenHelper {
                 " (" +
                 DbContract.Story.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 DbContract.Story.COLUMN_DIFF + " INTEGER NOT NULL, " +
-                DbContract.Story.COLUMN_IMG + " TEXT NOT NULL, " +
+                DbContract.Story.COLUMN_IMG + " TEXT, " +
                 DbContract.Story.COLUMN_CONTENT + " TEXT NOT NULL, " +
                 DbContract.Story.COLUMN_TITLE + " TEXT NOT NULL, " +
                 DbContract.Story.COLUMN_DONE + " BOOL, " +
                 DbContract.Story.COLUMN_DESC + " TEXT, " +
-                DbContract.Story.COLUMN_APIID + " INTEGER, " +
+                DbContract.Story.COLUMN_APIID + " INTEGER NOT NULL, " +
                 "UNIQUE (" + DbContract.Story.COLUMN_ID + ") ON CONFLICT REPLACE );"
                 +
                 "CREATE TABLE " + DbContract.Question.TABLE_NAME + " (" +

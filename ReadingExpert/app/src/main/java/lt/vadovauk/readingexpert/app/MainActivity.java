@@ -3,7 +3,6 @@ package lt.vadovauk.readingexpert.app;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,16 +33,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
-        int questionsVersion = sharedPrefs.getInt(getString(R.string.questions_revision), 0);
-        if (questionsVersion == 0) {
-            //TODO download data from the db and insert to local storage
-            getStories();
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            editor.putInt(getString(R.string.questions_revision), 1);
-            editor.apply();
-        }
-
         mGridView = (GridView) findViewById(R.id.gridView);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -54,7 +43,7 @@ public class MainActivity extends Activity {
             }
         });
 
-
+        getStories();
     }
 
     @Override
@@ -91,18 +80,15 @@ public class MainActivity extends Activity {
                         String content = storyJSON.getString("content");
                         String title = storyJSON.getString("title");
                         String description = storyJSON.getString("description");
+                        String imageUrl = NetworkClient.BASE_URL + storyJSON.getString("imagesource");
 
-                        Story story = new Story(apiid, title, description, difficulty, content, null);
+                        Story story = new Story(apiid, title, description, difficulty, content, imageUrl);
                         stories.add(story);
-                        story.insertIntoDb(context);
-
-                        mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
-
+                mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
             }
 
             @Override

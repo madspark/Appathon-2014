@@ -16,10 +16,18 @@ import java.util.Random;
 public class CrosswordGridAdapter extends BaseAdapter {
 
     public static final int GRID_SIZE = 6;
+
     private static final int DIRECTION_HORIZONTAL = 0;
     private static final int DIRECTION_VERTICAL = 1;
     private static final int DIRECTION_DIAGONAL_LOWER = 2;
     private static final int DIRECTION_DIAGONAL_UPPER = 3;
+
+    private static final int SELECTION_ZERO = 0;
+    private static final int SELECTION_ONE = 1;
+    private static final int SELECTION_HORIZONTAL = 2;
+    private static final int SELECTION_VERTICAL = 3;
+    private static final int SELECTION_DIAGONAL = 4;
+
     private static final int initialColor = Color.parseColor("#939393");
     private static final int selectedColor = Color.parseColor("#3F51B5");
 
@@ -29,6 +37,8 @@ public class CrosswordGridAdapter extends BaseAdapter {
     private boolean[] mCorrect;
     private TextView[] mViews;
     private Random mRand;
+    private int mSelection;
+    private int mPrevPosition;
 
     public CrosswordGridAdapter(Context context, String word) {
         mContext = context;
@@ -129,9 +139,10 @@ public class CrosswordGridAdapter extends BaseAdapter {
     }
 
     public boolean checkCorrect() {
+        mSelection = SELECTION_ZERO;
         boolean correct = true;
         for (int i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
-            if (mCorrect[i] != (((ColorDrawable) mViews[i].getBackground()).getColor() == selectedColor)) {
+            if (mCorrect[i] != isSelected(i)) {
                 correct = false;
             }
         }
@@ -149,7 +160,50 @@ public class CrosswordGridAdapter extends BaseAdapter {
         return correct;
     }
 
-    public void select(int position) {
-        mViews[position].setBackgroundColor(selectedColor);
+    public void select(int i) {
+        if (mSelection == SELECTION_ZERO) {
+            mSelection = SELECTION_ONE;
+            setSelected(i);
+        } else if (mSelection == SELECTION_ONE && !isSelected(i)) {
+            if (getX(i) == getX(mPrevPosition)) {
+                mSelection = SELECTION_HORIZONTAL;
+                setSelected(i);
+            } else if (getY(i) == getY(mPrevPosition)) {
+                mSelection = SELECTION_VERTICAL;
+                setSelected(i);
+            } else {
+                mSelection = SELECTION_DIAGONAL;
+                setSelected(i);
+            }
+        } else if (mSelection == SELECTION_HORIZONTAL
+                && getX(i) == getX(mPrevPosition)
+                && (getY(i) == getY(mPrevPosition) + 1 || getY(i) == getY(mPrevPosition) - 1)) {
+            setSelected(i);
+        } else if (mSelection == SELECTION_VERTICAL
+                && getY(i) == getY(mPrevPosition)
+                && (getX(i) == getX(mPrevPosition) + 1 || getX(i) == getX(mPrevPosition) - 1)) {
+            setSelected(i);
+        } else if (mSelection == SELECTION_DIAGONAL
+                && (getX(i) == getX(mPrevPosition) + 1 && getY(i) == getY(mPrevPosition) + 1
+                || getX(i) == getX(mPrevPosition) - 1 && getY(i) == getY(mPrevPosition) - 1)) {
+            setSelected(i);
+        }
+    }
+
+    private void setSelected(int i) {
+        mPrevPosition = i;
+        mViews[i].setBackgroundColor(selectedColor);
+    }
+
+    private boolean isSelected(int i) {
+        return ((ColorDrawable) mViews[i].getBackground()).getColor() == selectedColor;
+    }
+
+    private static int getX(int i) {
+        return i / GRID_SIZE;
+    }
+
+    private static int getY(int i) {
+        return i % GRID_SIZE;
     }
 }
