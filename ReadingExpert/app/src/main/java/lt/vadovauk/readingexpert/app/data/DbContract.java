@@ -5,7 +5,7 @@ package lt.vadovauk.readingexpert.app.data;
  */
 public class DbContract {
 
-    class Story {
+    public static final class Story {
 
         public static final String TABLE_NAME = "Stories";
 
@@ -23,7 +23,7 @@ public class DbContract {
 
     }
 
-    class Question {
+    public static final class Question {
 
         public static final String TABLE_NAME = "Questions";
 
