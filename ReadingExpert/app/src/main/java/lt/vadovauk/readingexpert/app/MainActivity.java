@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         ArrayList<Story> stories = new ArrayList<Story>();
-        Story testStory = new Story("asdasd", "description", 4, "once upon a time");
+        Story testStory = new Story("asdasd", "description", 4, "once upon a time", " imageSource", false);
         stories.add(testStory);
         stories.add(testStory);
         stories.add(testStory);
