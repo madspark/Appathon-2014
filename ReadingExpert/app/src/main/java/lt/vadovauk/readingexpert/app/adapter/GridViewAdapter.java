@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import lt.vadovauk.readingexpert.app.R;
@@ -18,9 +20,11 @@ public class GridViewAdapter extends BaseAdapter {
 
     private final LayoutInflater inflater;
     private ArrayList<Story> stories;
+    Activity activity;
 
     public GridViewAdapter(Activity activity, ArrayList<Story> stories) {
         this.stories = stories;
+        this.activity = activity;
 
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,7 +59,8 @@ public class GridViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.storyTitleTxt.setText("LEVEL "+position);
+        holder.storyTitleTxt.setText("LEVEL " + position);
+        Picasso.with(activity).load(stories.get(position).getImageSource()).into(holder.storyImg);
 
         return convertView;
     }
