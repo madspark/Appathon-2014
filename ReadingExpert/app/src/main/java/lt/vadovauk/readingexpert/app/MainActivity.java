@@ -55,12 +55,10 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.action_crossword_test) {
-            Intent intent = new Intent(this, CrosswordActivity.class);
+        } else if (id == R.id.action_quiz) {
+            Intent intent = new Intent(MainActivity.this, QuizActivity.class);
             startActivity(intent);
-        } else if (id == R.id.action_quiz_test) {
-            Intent intent = new Intent(this, QuizActivity.class);
-            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

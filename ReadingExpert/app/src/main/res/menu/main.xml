@@ -5,10 +5,7 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
-    <item android:id="@+id/action_crossword_test"
-          android:title="@string/title_activity_crossword"
-          android:showAsAction="never" />
-    <item android:id="@+id/action_quiz_test"
-          android:title="@string/title_activity_quiz"
+    <item android:id="@+id/action_quiz"
+          android:title="Quiz Activity Test"
           android:showAsAction="never" />
 </menu>
