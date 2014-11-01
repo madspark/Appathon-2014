@@ -5,11 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.Serializable;
+
 import lt.vadovauk.readingexpert.app.data.DbContract;
 import lt.vadovauk.readingexpert.app.data.DbHelper;
 
+<<<<<<< HEAD
+public class Story implements Serializable {
+=======
 public class Story {
     private int apiid;
+>>>>>>> 5a931e5e8711179200dc9148673f301638c4b303
     private String title;
     private String description;
     private int difficulty; //wpm
