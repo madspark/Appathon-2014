@@ -38,6 +38,10 @@ public class MainActivity extends Activity {
         int questionsVersion = sharedPrefs.getInt(getString(R.string.questions_revision), 0);
         if (questionsVersion == 0) {
             //TODO download data from the db and insert to local storage
+            getStories();
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            editor.putInt(getString(R.string.questions_revision), 1);
+            editor.apply();
         }
 
         mGridView = (GridView) findViewById(R.id.gridView);
@@ -49,7 +53,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        getStories();
+
     }
 
     @Override
