@@ -2,8 +2,15 @@ package lt.vadovauk.readingexpert.app;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.apache.http.Header;
+
+import lt.vadovauk.readingexpert.app.common.NetworkClient;
 
 
 public class SplashActivity extends Activity {
@@ -12,6 +19,23 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        getStories();
+    }
+
+    private void getStories() {
+
+        NetworkClient.get("/stories/get_all_stories", null, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Log.i("asd", "Loaded stories");
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+            }
+        });
     }
 
 
