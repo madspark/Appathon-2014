@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
@@ -29,6 +30,13 @@ public class MainActivity extends Activity {
         stories.add(testStory);
         GridView mGridView = (GridView) findViewById(R.id.gridView);
         mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

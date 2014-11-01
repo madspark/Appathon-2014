@@ -9,8 +9,8 @@
     <string name="title_activity_pre_read">ReadAndTypeActivity</string>
     <string name="title_activity_crossword">CrosswordActivity</string>
     <string name="action_crossword_test">Crossword (Test)</string>
-    <string name="title_activity_result">ResultActivity</string>
-    <string name="title_activity_read">ResultActivity</string>
+    <string name="title_activity_result">Result</string>
+    <string name="title_activity_read">Read</string>
     <string name="title_activity_question">Questions</string>
     <string name="title_activity_settings">SettingsActivity</string>
 

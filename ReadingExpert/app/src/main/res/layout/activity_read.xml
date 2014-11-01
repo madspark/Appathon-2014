@@ -9,8 +9,17 @@
     tools:context="lt.vadovauk.readingexpert.app.ReadActivity">
 
     <TextView
-        android:text="@string/hello_world"
+        android:id="@+id/read_line_txt"
+        android:text="Once upon a time"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"/>
+
+    <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Previous"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

@@ -3,7 +3,7 @@ package lt.vadovauk.readingexpert.app.domain;
 public class Story {
     private String title;
     private String description;
-    private int difficulty; //wpm
+    private int difficulty; // words per minute
     private String content;
 
     public Story(String title, String description, int difficulty, String content) {
