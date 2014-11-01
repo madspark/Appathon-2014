@@ -8,12 +8,14 @@
     <string name="hear_and_type">Hear &amp; Type</string>
     <string name="title_activity_pre_read">Pre read </string>
     <string name="title_activity_crossword">Crossword</string>
-    <string name="action_crossword_test">Crossword (Test)</string>
     <string name="title_activity_result">Result</string>
     <string name="title_activity_read">Read</string>
     <string name="title_activity_question">Questions</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="questions_revision">QuestionsRevision</string>
+    <string name="next">Next</string>
+    <string name="correct">Correct!</string>
+    <string name="incorrect">Incorrect!</string>
 
 </resources>

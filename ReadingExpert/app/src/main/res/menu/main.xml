@@ -6,6 +6,6 @@
         android:orderInCategory="100"
         android:showAsAction="never" />
     <item android:id="@+id/action_crossword_test"
-          android:title="@string/action_crossword_test"
+          android:title="@string/title_activity_crossword"
           android:showAsAction="never" />
 </menu>

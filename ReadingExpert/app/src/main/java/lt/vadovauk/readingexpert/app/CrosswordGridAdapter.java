@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Random;
 
@@ -21,8 +20,10 @@ public class CrosswordGridAdapter extends BaseAdapter {
     private static final int DIRECTION_VERTICAL = 1;
     private static final int DIRECTION_DIAGONAL_LOWER = 2;
     private static final int DIRECTION_DIAGONAL_UPPER = 3;
-    private static String TAG = "CrosswordGridAdapter";
+    private static final int initialColor = Color.parseColor("#939393");
+    private static final int selectedColor = Color.parseColor("#3F51B5");
 
+    private static final String TAG = "CrosswordGridAdapter";
     private Context mContext;
     private char[] mLetters;
     private boolean[] mCorrect;
@@ -89,7 +90,7 @@ public class CrosswordGridAdapter extends BaseAdapter {
             textView.setHeight(150);
             textView.setTextSize(40);
             textView.setGravity(Gravity.CENTER);
-            textView.setBackgroundColor(Color.BLUE);
+            textView.setBackgroundColor(initialColor);
             textView.setText(String.valueOf(mLetters[i]));
             mViews[i] = textView;
         }
@@ -127,31 +128,28 @@ public class CrosswordGridAdapter extends BaseAdapter {
         return textView;
     }
 
-    public TextView getTextView(int position) {
-        return mViews[position];
-    }
-
-    public void checkCorrect() {
+    public boolean checkCorrect() {
         boolean correct = true;
         for (int i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
-            TextView textView = (TextView) mViews[i];
-            if (mCorrect[i] != (((ColorDrawable) textView.getBackground()).getColor() == Color.GREEN)) {
+            if (mCorrect[i] != (((ColorDrawable) mViews[i].getBackground()).getColor() == selectedColor)) {
                 correct = false;
             }
         }
-        if (correct) {
-            Toast.makeText(mContext, "Correct!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(mContext, "Incorrect!", Toast.LENGTH_SHORT).show();
-        }
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
-                    mViews[i].setBackgroundColor(Color.BLUE);
+        if (!correct) {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+                        mViews[i].setBackgroundColor(initialColor);
+                    }
                 }
-            }
-        }, 1000);
+            }, 1000);
+        }
+        return correct;
+    }
+
+    public void select(int position) {
+        mViews[position].setBackgroundColor(selectedColor);
     }
 }
