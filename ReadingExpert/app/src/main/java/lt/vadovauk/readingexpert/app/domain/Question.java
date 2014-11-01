@@ -84,7 +84,7 @@ public class Question {
         db.close();
     }
 
-    public static Question[] getQuestions(int storyId, Context context){
+    public static Question[] getQuestions(int storyapiId, Context context){
 
         DbHelper helper = new DbHelper(context);
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -95,7 +95,7 @@ public class Question {
 
         Cursor c = db.query(DbContract.Question.TABLE_NAME, null,
                 DbContract.Question.COLUMN_STORYID + " = ?",
-                new String[] {Integer.toString(storyId)}, null, null, null);
+                new String[] {Integer.toString(storyapiId)}, null, null, null);
 
         int cursorSize = c.getPosition();
         Question[] qs = new Question[cursorSize];
@@ -107,7 +107,7 @@ public class Question {
             others = new ArrayList<String>(Arrays.asList(ot.split(",")));
             int id = c.getInt(c.getColumnIndex(DbContract.Question.COLUMN_ID));
 
-            qs[i] = new Question(id, storyId, question, correct, others);
+            qs[i] = new Question(id, storyapiId, question, correct, others);
         }
 
         return qs;
