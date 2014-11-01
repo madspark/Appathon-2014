@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
 import lt.vadovauk.readingexpert.app.domain.Story;
 
-
 public class MainActivity extends Activity {
 
     @Override
