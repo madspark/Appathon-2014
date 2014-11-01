@@ -10,8 +10,8 @@ import java.io.Serializable;
 import lt.vadovauk.readingexpert.app.data.DbContract;
 import lt.vadovauk.readingexpert.app.data.DbHelper;
 
-public class Story implements Serializable {
 
+public class Story implements Serializable{
     private int apiid;
     private String title;
     private String description;
