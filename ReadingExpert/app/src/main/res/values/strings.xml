@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="intro">Choose activity:</string>
     <string name="hear_and_type">Hear &amp; Type</string>
-    <string name="title_activity_pre_read">ReadAndTypeActivity</string>
+    <string name="title_activity_pre_read">Pre read </string>
     <string name="title_activity_crossword">CrosswordActivity</string>
     <string name="action_crossword_test">Crossword (Test)</string>
     <string name="title_activity_result">Result</string>
