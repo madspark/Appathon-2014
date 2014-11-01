@@ -25,18 +25,20 @@ public class ReadActivity extends Activity {
         readLineTxt = (TextView) findViewById(R.id.read_line_txt);
         lines = DataHelper.getLines(content);
 
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+        final Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(line<lines.size()) {
+                        if (line < lines.size()) {
                             readLineTxt.setText(lines.get(line));
                             line++;
-                        }else{
+                        } else {
                             Intent intent = new Intent(ReadActivity.this, ResultActivity.class);
                             startActivity(intent);
+                            timer.cancel();
                             finish();
                         }
                     }
