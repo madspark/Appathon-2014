@@ -87,7 +87,6 @@ public class MainActivity extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
                 mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
             }
