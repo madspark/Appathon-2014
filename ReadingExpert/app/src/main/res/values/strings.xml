@@ -7,9 +7,7 @@
     <string name="intro">Choose activity:</string>
     <string name="hear_and_type">Hear &amp; Type</string>
     <string name="title_activity_read_and_type">ReadAndTypeActivity</string>
-    <string name="title_activity_pre_read">PreReadActivity</string>
-    <string name="title_activity_reading">ReadingActivity</string>
-    <string name="title_activity_question">QuestionActivity</string>
-    <string name="title_activity_read">ReadActivity</string>
+    <string name="title_activity_crossword">CrosswordActivity</string>
+    <string name="action_crossword_test">Crossword (Test)</string>
 
 </resources>
