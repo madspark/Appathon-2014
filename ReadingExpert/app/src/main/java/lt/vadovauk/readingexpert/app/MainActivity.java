@@ -43,12 +43,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        stories = Story.getStories(context);
-        if (stories.size() == 0) {
-            getStories();
-        } else {
-            mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
-        }
+        getStories();
     }
 
     @Override
@@ -89,14 +84,15 @@ public class MainActivity extends Activity {
 
                         Story story = new Story(apiid, title, description, difficulty, content, imageUrl);
                         stories.add(story);
-                        story.insertIntoDb(context);
+                        //story.insertIntoDb(context);
 
-                        mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                 }
+                mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
 
             }
 
