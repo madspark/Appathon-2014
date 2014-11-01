@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import lt.vadovauk.readingexpert.app.data.DbContract;
 import lt.vadovauk.readingexpert.app.data.DbHelper;
@@ -96,6 +97,7 @@ public class Story implements Serializable{
 
         c.moveToFirst();
 
+        //int id;
         String title;
         String description;
         int difficulty;
@@ -103,7 +105,7 @@ public class Story implements Serializable{
         String imageSource;
         boolean done;
 
-        apiid = c.getInt(c.getColumnIndex(DbContract.Story.COLUMN_APIID));
+        //id = c.getInt(c.getColumnIndex(DbContract.Story.COLUMN_ID));
         title = c.getString(c.getColumnIndex(DbContract.Story.COLUMN_TITLE));
         description = c.getString(c.getColumnIndex(DbContract.Story.COLUMN_DESC));
         difficulty = c.getInt(c.getColumnIndex(DbContract.Story.COLUMN_DIFF));
@@ -113,6 +115,41 @@ public class Story implements Serializable{
 
         return new Story(apiid, title, description, difficulty, content, imageSource);
 
+    }
+
+    public static ArrayList<Story> getStories(Context context){
+
+        ArrayList<Story> stories = new ArrayList<Story>();
+
+        DbHelper helper = new DbHelper(context);
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = db.query(DbContract.Story.TABLE_NAME, null, null, null, null, null, null);
+
+        int size = c.getCount();
+        c.moveToFirst();
+
+        for(int i = 0; i< size; i++){
+
+            int apiId;
+            String title;
+            String description;
+            int difficulty;
+            String content;
+            String imageSource;
+            boolean done;
+
+            apiId = c.getInt(c.getColumnIndex(DbContract.Story.COLUMN_APIID));
+            title = c.getString(c.getColumnIndex(DbContract.Story.COLUMN_TITLE));
+            description = c.getString(c.getColumnIndex(DbContract.Story.COLUMN_DESC));
+            difficulty = c.getInt(c.getColumnIndex(DbContract.Story.COLUMN_DIFF));
+            content = c.getString(c.getColumnIndex(DbContract.Story.COLUMN_CONTENT));
+            imageSource = c.getString(c.getColumnIndex(DbContract.Story.COLUMN_IMG));
+            done = 1 == c.getInt(c.getColumnIndex(DbContract.Story.COLUMN_DONE));
+
+            stories.add(new Story(apiId, title, description, difficulty, content, imageSource));
+
+        }
+        return stories;
     }
 
 
