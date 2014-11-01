@@ -5,13 +5,29 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import lt.vadovauk.readingexpert.app.common.NetworkClient;
+import lt.vadovauk.readingexpert.app.domain.Question;
+
 
 public class QuestionActivity extends Activity {
+
+    ArrayList<Question> questions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
+        questions = new ArrayList<Question>();
     }
 
 
@@ -32,5 +48,38 @@ public class QuestionActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getQuestions() {
+
+        {
+            NetworkClient.get("/stories/get_all_questions", null, new JsonHttpResponseHandler() {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                    super.onSuccess(statusCode, headers, response);
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject storyJSON = response.getJSONObject(i);
+                            int apiid = Integer.parseInt(storyJSON.getString("id"));
+                            int storyId = Integer.parseInt(storyJSON.getString("story_id"));
+                            String questionContent = storyJSON.getString("Qcontent");
+                            String correctAnswer = storyJSON.getString("correct_answer");
+                            String otherAnswers = storyJSON.getString("other_answers");
+
+                            Question question = new Question(apiid, storyId, questionContent, correctAnswer, null);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                }
+            });
+        }
     }
 }
