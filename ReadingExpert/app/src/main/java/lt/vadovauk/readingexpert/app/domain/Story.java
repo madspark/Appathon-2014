@@ -72,6 +72,21 @@ public class Story implements Serializable{
     }
 
     public void insertIntoDb(Context context) {
+
+        //check if the story is already in the database
+        DbHelper helper = new DbHelper(context);
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        Cursor c = db.query(DbContract.Story.TABLE_NAME, null, DbContract.Story.COLUMN_APIID + " = ? ",
+                new String[] {Integer.toString(apiid)}, null, null, null);
+
+        if(c.moveToFirst()){
+            db.close();
+            return;
+        }
+
+        db = helper.getWritableDatabase();
+
         ContentValues cv = new ContentValues();
         cv.put(DbContract.Story.COLUMN_APIID, apiid);
         cv.put(DbContract.Story.COLUMN_TITLE, title);
@@ -81,8 +96,7 @@ public class Story implements Serializable{
         cv.put(DbContract.Story.COLUMN_CONTENT, content);
         cv.put(DbContract.Story.COLUMN_DESC, description);
 
-        DbHelper helper = new DbHelper(context);
-        SQLiteDatabase db = helper.getWritableDatabase();
+
         db.insert(DbContract.Story.TABLE_NAME, null, cv);
         db.close();
     }
@@ -92,7 +106,7 @@ public class Story implements Serializable{
         DbHelper helper = new DbHelper(context);
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor c = db.query(DbContract.Story.TABLE_NAME, null,
-                DbContract.Story.COLUMN_APIID + "= ?",
+                DbContract.Story.COLUMN_APIID + " = ?",
                 new String[]{Integer.toString(apiid)}, null, null, null);
 
         c.moveToFirst();
@@ -147,6 +161,7 @@ public class Story implements Serializable{
             done = 1 == c.getInt(c.getColumnIndex(DbContract.Story.COLUMN_DONE));
 
             stories.add(new Story(apiId, title, description, difficulty, content, imageSource));
+            c.moveToNext();
 
         }
         return stories;
