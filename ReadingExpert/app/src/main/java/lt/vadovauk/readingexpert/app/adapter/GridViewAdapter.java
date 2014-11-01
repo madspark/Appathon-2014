@@ -17,8 +17,10 @@ import lt.vadovauk.readingexpert.app.domain.Story;
 public class GridViewAdapter extends BaseAdapter {
 
     private final LayoutInflater inflater;
+    private ArrayList<Story> stories;
 
     public GridViewAdapter(Activity activity, ArrayList<Story> stories) {
+        this.stories = stories;
 
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -26,7 +28,7 @@ public class GridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return stories.size();
     }
 
     @Override
@@ -46,11 +48,14 @@ public class GridViewAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.story_item, null);
-
+            holder.storyTitleTxt = (TextView) convertView.findViewById(R.id.story_title_txt);
+            holder.storyImg = (ImageView) convertView.findViewById(R.id.story_img);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        holder.storyTitleTxt.setText("LEVEL "+position);
 
         return convertView;
     }

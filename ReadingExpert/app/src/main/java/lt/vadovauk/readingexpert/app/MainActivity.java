@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -21,8 +24,19 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         ArrayList<Story> stories = new ArrayList<Story>();
-        GridView mGridView = (GridView)findViewById(R.id.gridView);
+        Story testStory = new Story("asdasd", "description", 4, "once upon a time");
+        stories.add(testStory);
+        stories.add(testStory);
+        stories.add(testStory);
+        GridView mGridView = (GridView) findViewById(R.id.gridView);
         mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

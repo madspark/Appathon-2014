@@ -1,12 +1,9 @@
 package lt.vadovauk.readingexpert.app.domain;
 
-/**
- * Created by Mantas-PC on 01/11/2014.
- */
 public class Story {
     private String title;
     private String description;
-    private int difficulty; //wpm
+    private int difficulty; // words per minute
     private String content;
 
     public Story(String title, String description, int difficulty, String content) {
