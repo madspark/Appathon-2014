@@ -9,8 +9,12 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import lt.vadovauk.readingexpert.app.helper.DataHelper;
+
 public class ReadActivity extends Activity {
-    String content =  "Once upon a time there was a lion who ...";
+    String content = "Once upon a time there was a lion who ...";
+    int line = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +28,7 @@ public class ReadActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        readLineTxt.setText(content);
+                        readLineTxt.setText(DataHelper.getLine(line, content));
                     }
                 });
             }
