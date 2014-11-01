@@ -108,6 +108,7 @@ public class Question {
             int id = c.getInt(c.getColumnIndex(DbContract.Question.COLUMN_ID));
 
             qs[i] = new Question(id, storyapiId, question, correct, others);
+            c.moveToNext();
         }
 
         return qs;

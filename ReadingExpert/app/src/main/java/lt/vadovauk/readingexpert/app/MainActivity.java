@@ -33,9 +33,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        getStories();
-
+        stories = Story.getStories(context);
+        if(stories.size() == 0){
+            getStories();
+        }else {
+            mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
+        }
 
         mGridView = (GridView) findViewById(R.id.gridView);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -46,8 +49,6 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-
-
     }
 
     @Override
@@ -79,20 +80,21 @@ public class MainActivity extends Activity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject storyJSON = response.getJSONObject(i);
-                        int apiId = Integer.parseInt(storyJSON.getString("id"));
+                        int apiid = Integer.parseInt(storyJSON.getString("id"));
                         int difficulty = Integer.parseInt(storyJSON.getString("difficulty"));
                         String content = storyJSON.getString("content");
                         String title = storyJSON.getString("title");
                         String description = storyJSON.getString("description");
 
-                        Story story = new Story(apiId, title, description, difficulty, content, null);
+                        Story story = new Story(apiid, title, description, difficulty, content, null);
                         stories.add(story);
                         story.insertIntoDb(context);
 
-                        setGridView(stories);
+                        mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
 
             }
@@ -102,9 +104,5 @@ public class MainActivity extends Activity {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
-    }
-
-    private void setGridView(ArrayList<Story> stories) {
-        mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
     }
 }
