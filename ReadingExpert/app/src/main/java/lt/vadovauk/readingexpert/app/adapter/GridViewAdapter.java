@@ -48,11 +48,14 @@ public class GridViewAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.story_item, null);
-
+            holder.storyTitleTxt = (TextView) convertView.findViewById(R.id.story_title_txt);
+            holder.storyImg = (ImageView) convertView.findViewById(R.id.story_img);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        holder.storyTitleTxt.setText("LEVEL "+position);
 
         return convertView;
     }

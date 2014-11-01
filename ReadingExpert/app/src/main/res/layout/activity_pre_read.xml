@@ -9,8 +9,34 @@
     tools:context="lt.vadovauk.readingexpert.app.PreReadActivity">
 
     <TextView
-        android:text="@string/hello_world"
+        android:id="@+id/story_title_txt"
+        android:text="Story title"
         android:layout_width="wrap_content"
+        android:textSize="20sp"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/story_img"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/story_title_txt"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/story_description_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/story_img"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:text="Story description"></TextView>
+
+    <Button
+        android:id="@+id/proceed_btn"
+        android:text="Proceed"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>
