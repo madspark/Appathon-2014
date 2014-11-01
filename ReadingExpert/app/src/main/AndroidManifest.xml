@@ -17,12 +17,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ReadAndTypeActivity"
-            android:label="@string/title_activity_read_and_type"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="lt.vadovauk.readingexpert.app.MainActivity" />
+            android:name=".PreReadActivity"
+            android:label="@string/title_activity_pre_read" >
+        </activity>
+        <activity
+            android:name=".ReadActivity"
+            android:label="@string/title_activity_reading" >
+        </activity>
+        <activity
+            android:name=".QuestionActivity"
+            android:label="@string/title_activity_question" >
         </activity>
     </application>
 
