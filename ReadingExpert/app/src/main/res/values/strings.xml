@@ -4,5 +4,8 @@
     <string name="app_name">Reading Expert</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="intro">Choose activity:</string>
+    <string name="hear_and_type">Hear &amp; Type</string>
+    <string name="title_activity_read_and_type">ReadAndTypeActivity</string>
 
 </resources>
