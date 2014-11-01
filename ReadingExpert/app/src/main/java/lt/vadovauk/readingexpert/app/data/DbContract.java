@@ -18,6 +18,8 @@ public class DbContract {
 
         public static final String COLUMN_CONTENT = "content";
 
+        public static final String COLUMN_DESC = "description";
+
     }
 
     public static final class Question {
