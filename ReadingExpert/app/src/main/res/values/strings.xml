@@ -14,5 +14,6 @@
     <string name="title_activity_question">Questions</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="questions_revision">QuestionsRevision</string>
 
 </resources>
