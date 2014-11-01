@@ -17,7 +17,11 @@
 
     <ImageView
         android:id="@+id/story_img"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:paddingLeft="55dp"
+        android:paddingRight="55dp"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/story_title_txt"
         android:layout_height="wrap_content"
