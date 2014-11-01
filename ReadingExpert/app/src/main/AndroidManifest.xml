@@ -1,56 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="lt.vadovauk.readingexpert.app" >
+    package="lt.vadovauk.readingexpert.app">
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".PreReadActivity"
             android:label="@string/title_activity_pre_read"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lt.vadovauk.readingexpert.app.MainActivity" />
         </activity>
         <activity
             android:name=".ReadActivity"
-            android:label="@string/title_activity_read" >
-        </activity>
+            android:label="@string/title_activity_read"></activity>
         <activity
             android:name=".QuestionActivity"
-            android:label="@string/title_activity_question" >
-        </activity>
+            android:label="@string/title_activity_question"></activity>
         <activity
             android:name=".CrosswordActivity"
             android:label="@string/title_activity_crossword"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lt.vadovauk.readingexpert.app.MainActivity" />
         </activity>
         <activity
             android:name=".ResultActivity"
-            android:label="@string/title_activity_result" >
-        </activity>
+            android:label="@string/title_activity_result"></activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
+            android:label="@string/title_activity_settings"></activity>
         <activity
             android:name=".SplashActivity"
-            android:label="@string/title_activity_splash" >
+            android:label="@string/title_activity_splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
         }
 
         ArrayList<Story> stories = new ArrayList<Story>();
-        Story testStory = new Story("asdasd", "description", 4, "once upon a time", " imageSource", false);
+        Story testStory = new Story("asdasd", "description", 4, "once upon a time", " imageSource");
         stories.add(testStory);
         stories.add(testStory);
         stories.add(testStory);
