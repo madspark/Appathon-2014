@@ -13,5 +13,6 @@
     <string name="title_activity_read">Read</string>
     <string name="title_activity_question">Questions</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
 
 </resources>

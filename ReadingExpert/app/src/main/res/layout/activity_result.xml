@@ -9,8 +9,31 @@
     tools:context="lt.vadovauk.readingexpert.app.ResultActivity">
 
     <TextView
-        android:text="@string/hello_world"
+        android:id="@+id/question_txt"
+        android:text="Who is the king of the jungle?"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/answer_et"
+            android:layout_below="@id/question_txt"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/hint_btn"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="Hint"></Button>
+
+    </LinearLayout>
 
 </RelativeLayout>
