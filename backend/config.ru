@@ -1,4 +1,4 @@
 require 'rack'
-load 'test.rb'
+load 'index.rb'
 
-run Twitter::API
+run ReadingExpert::API
