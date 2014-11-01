@@ -24,6 +24,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lt.vadovauk.readingexpert.app.MainActivity" />
         </activity>
+        <activity
+            android:name=".CrosswordActivity"
+            android:label="@string/title_activity_crossword"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="lt.vadovauk.readingexpert.app.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
