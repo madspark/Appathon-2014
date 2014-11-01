@@ -6,21 +6,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context="lt.vadovauk.readingexpert.app.SplashActivity">
 
     <TextView
-        android:id="@+id/expl_text"
-        android:text="Choose story:"
-        android:layout_centerHorizontal="true"
-        android:textSize="20sp"
+        android:text="Splash activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-
-    <GridView
-        android:id="@+id/gridView"
-        android:layout_below="@id/expl_text"
-        android:layout_width="match_parent"
-        android:numColumns="2"
-        android:layout_height="match_parent"></GridView>
 </RelativeLayout>

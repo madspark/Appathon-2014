@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
 
-
 public class CrosswordActivity extends Activity {
 
     private String mQuestion;

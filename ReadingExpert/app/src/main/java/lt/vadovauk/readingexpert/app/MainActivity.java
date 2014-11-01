@@ -2,18 +2,18 @@ package lt.vadovauk.readingexpert.app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
 
 import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
 import lt.vadovauk.readingexpert.app.domain.Story;
-
 
 public class MainActivity extends Activity {
 
@@ -22,9 +22,26 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
+        int questionsVersion = sharedPrefs.getInt(getString(R.string.questions_revision), 0);
+        if(questionsVersion == 0){
+            //TODO download data from the db and insert to local storage
+        }
+
         ArrayList<Story> stories = new ArrayList<Story>();
-        GridView mGridView = (GridView)findViewById(R.id.gridView);
+        Story testStory = new Story("asdasd", "description", 4, "once upon a time", " imageSource", false);
+        stories.add(testStory);
+        stories.add(testStory);
+        stories.add(testStory);
+        GridView mGridView = (GridView) findViewById(R.id.gridView);
         mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

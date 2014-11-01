@@ -29,6 +29,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 DbContract.Story.COLUMN_CONTENT + " TEXT NOT NULL, " +
                 DbContract.Story.COLUMN_TITLE + " TEXT NOT NULL, " +
                 DbContract.Story.COLUMN_DONE + " BOOL, " +
+                DbContract.Story.COLUMN_DESC + " TEXT, " +
                 "UNIQUE (" + DbContract.Story.COLUMN_ID + ") ON CONFLICT REPLACE );"
                 +
                 "CREATE TABLE " + DbContract.Question.TABLE_NAME + " (" +
