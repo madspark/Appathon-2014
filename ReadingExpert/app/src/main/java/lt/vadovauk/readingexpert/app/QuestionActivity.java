@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import lt.vadovauk.readingexpert.app.common.NetworkClient;
 import lt.vadovauk.readingexpert.app.domain.Question;
+import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
 
 public class QuestionActivity extends Activity {
@@ -67,12 +68,17 @@ public class QuestionActivity extends Activity {
                             String correctAnswer = storyJSON.getString("correct_answer");
                             String otherAnswers = storyJSON.getString("other_answers");
 
-                            Question question = new Question(apiid, storyId, questionContent, correctAnswer, null);
+                            ArrayList<String> otherAns = DataHelper.getOtherAns(otherAnswers);
+
+                            Question question = new Question(apiid, storyId, questionContent, correctAnswer, otherAns);
+                            questions.add(question);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
+
+
                 }
 
                 @Override

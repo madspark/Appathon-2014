@@ -84,16 +84,12 @@ public class MainActivity extends Activity {
 
                         Story story = new Story(apiid, title, description, difficulty, content, imageUrl);
                         stories.add(story);
-                        //story.insertIntoDb(context);
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                 }
                 mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
-
             }
 
             @Override

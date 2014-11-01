@@ -26,4 +26,14 @@ public class DataHelper {
 
         return lines;
     }
+
+    public static ArrayList<String> getOtherAns(String otherAnswers) {
+        ArrayList<String> otherAns = new ArrayList<String>();
+
+        StringTokenizer st = new StringTokenizer(otherAnswers, ",");
+        while (st.hasMoreTokens()) {
+            otherAns.add(st.nextToken());
+        }
+        return otherAns;
+    }
 }
