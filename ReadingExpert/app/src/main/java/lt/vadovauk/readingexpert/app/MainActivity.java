@@ -2,6 +2,7 @@ package lt.vadovauk.readingexpert.app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences sharedPrefs = getPreferences(MODE_PRIVATE);
+        int questionsVersion = sharedPrefs.getInt(getString(R.string.questions_revision), 0);
+        if(questionsVersion == 0){
+            //TODO download data from the db and insert to local storage
+        }
+
         ArrayList<Story> stories = new ArrayList<Story>();
         Story testStory = new Story("asdasd", "description", 4, "once upon a time", " imageSource", false);
         stories.add(testStory);
@@ -36,6 +43,8 @@ public class MainActivity extends Activity {
             }
         });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
