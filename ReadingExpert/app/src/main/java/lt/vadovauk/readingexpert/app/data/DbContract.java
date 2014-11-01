@@ -1,8 +1,5 @@
 package lt.vadovauk.readingexpert.app.data;
 
-/**
- * Created by antanas on 14.11.1.
- */
 public class DbContract {
 
     class Story {
