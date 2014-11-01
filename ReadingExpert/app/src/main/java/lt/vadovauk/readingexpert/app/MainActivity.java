@@ -33,13 +33,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        stories = Story.getStories(context);
-        if(stories.size() == 0){
-            getStories();
-        }else {
-            mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
-        }
-
         mGridView = (GridView) findViewById(R.id.gridView);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,6 +42,13 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        stories = Story.getStories(context);
+        if (stories.size() == 0) {
+            getStories();
+        } else {
+            mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
+        }
     }
 
     @Override
@@ -85,8 +85,9 @@ public class MainActivity extends Activity {
                         String content = storyJSON.getString("content");
                         String title = storyJSON.getString("title");
                         String description = storyJSON.getString("description");
+                        String imageUrl = NetworkClient.BASE_URL + storyJSON.getString("imagesource");
 
-                        Story story = new Story(apiid, title, description, difficulty, content, null);
+                        Story story = new Story(apiid, title, description, difficulty, content, imageUrl);
                         stories.add(story);
                         story.insertIntoDb(context);
 

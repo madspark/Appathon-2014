@@ -9,7 +9,7 @@ import com.loopj.android.http.RequestParams;
 
 public class NetworkClient {
 
-    private static final String BASE_URL = "http://178.62.95.162:9292/";
+    public static final String BASE_URL = "http://178.62.95.162:9292/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
