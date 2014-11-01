@@ -16,18 +16,15 @@ public class HintReadActivity extends Activity implements
 
     private TextToSpeech tts;
     private Button btnSpeak;
-    private TextView txtText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hint_reader);
+        setContentView(R.layout.activity_result);
 
         tts = new TextToSpeech(this, this);
 
         btnSpeak = (Button) findViewById(R.id.btnSpeak);
-
-        txtText = (TextView) findViewById(R.id.txtText); // Query current question answer
 
         // button on click event
         btnSpeak.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +75,7 @@ public class HintReadActivity extends Activity implements
 
     private void speakOut() {
 
-        String text = txtText.getText().toString();
+        String text = "Hello world"; // Change to queried answer
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 }
