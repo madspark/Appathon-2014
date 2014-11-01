@@ -40,6 +40,8 @@
         android:id="@+id/proceed_btn"
         android:text="Proceed"
         android:layout_alignParentBottom="true"
+        android:background="@color/secondary_color"
+        android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
