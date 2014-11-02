@@ -24,7 +24,7 @@ public class ReadActivity extends Activity {
         setContentView(R.layout.activity_read);
 
         content = getIntent().getStringExtra("content");
-         id = getIntent().getStringExtra("id");
+        id = getIntent().getStringExtra("id");
 
         readLineTxt = (TextView) findViewById(R.id.read_line_txt);
         lines = DataHelper.getLines(content);

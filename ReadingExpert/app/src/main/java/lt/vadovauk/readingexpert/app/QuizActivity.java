@@ -53,8 +53,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
         });
 
         mQuestions = new ArrayList<Question>();
-
-        getQuestions();
+        getQuestions(getIntent().getStringExtra("id"));
     }
 
 
