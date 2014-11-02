@@ -2,10 +2,13 @@ package lt.vadovauk.readingexpert.app;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -52,6 +55,23 @@ public class QuizFragment extends Fragment {
         questionTextView.setText(mQuestion);
 
         final EditText answerEditText = (EditText) v.findViewById(R.id.answer_edit);
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        answerEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, final boolean hasFocus) {
+                answerEditText.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (hasFocus) {
+                            imm.showSoftInput(answerEditText, InputMethodManager.SHOW_IMPLICIT);
+                        } else {
+                            imm.hideSoftInputFromWindow(answerEditText.getWindowToken(), 0);
+                        }
+                    }
+                });
+            }
+        });
+        answerEditText.requestFocus();
 
         Button checkButton = (Button) v.findViewById(R.id.check_button);
         checkButton.setOnClickListener(new View.OnClickListener() {

@@ -155,7 +155,7 @@ public class CrosswordGridAdapter extends BaseAdapter {
                         mViews[i].setBackgroundColor(initialColor);
                     }
                 }
-            }, 1000);
+            }, 500);
         }
         return correct;
     }
