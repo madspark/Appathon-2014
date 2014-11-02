@@ -48,8 +48,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
                     int result = mTTS.setLanguage(Locale.US);
-                    //tts.setPitch(5);
-                    //tts.setSpeechRate(2);
+                    mTTS.setSpeechRate(0.7f);
                     if (result == TextToSpeech.LANG_MISSING_DATA
                             || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "TTS language is not supported");

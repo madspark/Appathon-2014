@@ -53,16 +53,18 @@ public class QuizFragment extends Fragment {
         questionTextView.setText(mQuestion);
 
         final EditText answerEditText = (EditText) v.findViewById(R.id.answer_edit);
-        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
         answerEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
                     checkClick();
+                    return true;
                 }
                 return false;
             }
         });
+        final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         answerEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, final boolean hasFocus) {
@@ -70,7 +72,7 @@ public class QuizFragment extends Fragment {
                     @Override
                     public void run() {
                         if (hasFocus) {
-                            imm.showSoftInput(answerEditText, InputMethodManager.SHOW_IMPLICIT);
+                            imm.showSoftInput(answerEditText, 0);
                         } else {
                             imm.hideSoftInputFromWindow(answerEditText.getWindowToken(), 0);
                         }
@@ -78,6 +80,7 @@ public class QuizFragment extends Fragment {
                 });
             }
         });
+        answerEditText.requestFocus();
 
         Button checkButton = (Button) v.findViewById(R.id.check_button);
         checkButton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +96,6 @@ public class QuizFragment extends Fragment {
     private void checkClick() {
         final EditText answerEditText = (EditText) getView().findViewById(R.id.answer_edit);
         if (answerEditText.getText().toString().toUpperCase().equals(mAnswer.toUpperCase())) {
-            Toast.makeText(getActivity(), R.string.correct, Toast.LENGTH_SHORT).show();
             mListener.onCorrect();
         } else {
             Toast.makeText(getActivity(), R.string.incorrect, Toast.LENGTH_SHORT).show();
