@@ -3,9 +3,10 @@ package lt.vadovauk.readingexpert.app;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import lt.vadovauk.readingexpert.app.common.NetworkClient;
 import lt.vadovauk.readingexpert.app.domain.Question;
@@ -16,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class QuizActivity extends Activity implements CrosswordFragment.OnCorrectListener {
@@ -24,12 +26,31 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
 
     private Fragment[] mFragments;
     private int mCurrentFragment;
-    private ArrayList<Question> questions;
+    private ArrayList<Question> mQuestions;
+    private TextToSpeech mTTS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        mTTS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+
+                    int result = mTTS.setLanguage(Locale.US);
+                    //tts.setPitch(5);
+                    //tts.setSpeechRate(2);
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "TTS language is not supported");
+                    }
+                } else {
+                    Log.e("TTS", "TTS initialization failed");
+                }
+            }
+        });
 
         mFragments = new Fragment[FRAGMENT_COUNT];
         mFragments[0] = CrosswordFragment.newInstance("What is Harry's last name?", "Potter");
@@ -53,13 +74,17 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
         return true;
     }
 
+    private void speakOut() {
+        mTTS.speak("Hello children", TextToSpeech.QUEUE_FLUSH, null);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_hint) {
-            Toast.makeText(this, "Cia turetu veikt hint TTS", Toast.LENGTH_SHORT);
+            speakOut();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -75,6 +100,15 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
         } else {
             finish();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mTTS != null) {
+            mTTS.stop();
+            mTTS.shutdown();
+        }
+        super.onDestroy();
     }
 
     private void getQuestions() {
@@ -95,14 +129,12 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
                         ArrayList<String> otherAns = DataHelper.getOtherAns(otherAnswers);
 
                         Question question = new Question(apiid, storyId, questionContent, correctAnswer, otherAns);
-                        questions.add(question);
+                        mQuestions.add(question);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-
-
             }
 
             @Override
