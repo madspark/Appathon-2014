@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app.domain;
+package com.svc2uk.readingexpert.domain;
 
 public class UserResult {
     public int storyId;

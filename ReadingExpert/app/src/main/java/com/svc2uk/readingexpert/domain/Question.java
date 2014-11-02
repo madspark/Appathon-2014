@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app.domain;
+package com.svc2uk.readingexpert.domain;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import lt.vadovauk.readingexpert.app.data.DbContract;
-import lt.vadovauk.readingexpert.app.data.DbHelper;
+import com.svc2uk.readingexpert.data.DbContract;
+import com.svc2uk.readingexpert.data.DbHelper;
 
 public class Question {
     private int id;

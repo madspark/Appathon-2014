@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app.common;
+package com.svc2uk.readingexpert.common;
 
 
 import android.content.Context;

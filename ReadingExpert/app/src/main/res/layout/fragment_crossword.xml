@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="lt.vadovauk.readingexpert.app.CrosswordFragment">
+    tools:context="com.svc2uk.readingexpert.CrosswordFragment">
 
     <TextView
         android:id="@+id/question_text_view"

@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app.helper;
+package com.svc2uk.readingexpert.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
-import lt.vadovauk.readingexpert.app.domain.UserResult;
+import com.svc2uk.readingexpert.domain.UserResult;
 
 public class StorageHelper {
     private static SharedPreferences prefs;

@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app;
+package com.svc2uk.readingexpert;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,12 +18,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
-import lt.vadovauk.readingexpert.app.common.NetworkClient;
-import lt.vadovauk.readingexpert.app.domain.Story;
-import lt.vadovauk.readingexpert.app.domain.UserResult;
-import lt.vadovauk.readingexpert.app.helper.DataHelper;
-import lt.vadovauk.readingexpert.app.helper.StorageHelper;
+
+import com.svc2uk.readingexpert.adapter.GridViewAdapter;
+import com.svc2uk.readingexpert.common.NetworkClient;
+import com.svc2uk.readingexpert.domain.Story;
+import com.svc2uk.readingexpert.domain.UserResult;
+import com.svc2uk.readingexpert.helper.DataHelper;
+import com.svc2uk.readingexpert.helper.StorageHelper;
 
 public class MainActivity extends Activity {
     Context context = MainActivity.this;

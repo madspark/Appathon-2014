@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app;
+package com.svc2uk.readingexpert;
 
 import android.content.Context;
 import android.graphics.Color;

@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app.data;
+package com.svc2uk.readingexpert.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -1,21 +1,19 @@
-package lt.vadovauk.readingexpert.app;
+package com.svc2uk.readingexpert;
 
 import android.app.Activity;
-import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import com.squareup.picasso.Picasso;
-import lt.vadovauk.readingexpert.app.domain.Story;
-import lt.vadovauk.readingexpert.app.domain.UserResult;
-import lt.vadovauk.readingexpert.app.helper.StorageHelper;
+
+import com.svc2uk.readingexpert.domain.Story;
+import com.svc2uk.readingexpert.domain.UserResult;
+import com.svc2uk.readingexpert.helper.StorageHelper;
 
 
 public class ResultActivity extends Activity {

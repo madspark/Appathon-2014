@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="lt.vadovauk.readingexpert.app" >
+    package="com.svc2uk.readingexpert" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.svc2uk.readingexpert.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -20,25 +20,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PreReadActivity"
+            android:name="com.svc2uk.readingexpert.PreReadActivity"
             android:label="@string/title_activity_pre_read"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.svc2uk.readingexpert.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="lt.vadovauk.readingexpert.app.MainActivity" />
         </activity>
         <activity
-            android:name=".ReadActivity"
+            android:name="com.svc2uk.readingexpert.ReadActivity"
             android:label="@string/title_activity_read"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".QuizActivity"
+            android:name="com.svc2uk.readingexpert.QuizActivity"
             android:label="@string/title_activity_quiz"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".ResultActivity"
+            android:name="com.svc2uk.readingexpert.ResultActivity"
             android:label="@string/title_activity_result" >
         </activity>
     </application>

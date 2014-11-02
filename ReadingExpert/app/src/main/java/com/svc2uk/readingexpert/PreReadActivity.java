@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app;
+package com.svc2uk.readingexpert;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import lt.vadovauk.readingexpert.app.domain.Story;
+import com.svc2uk.readingexpert.domain.Story;
 
 public class PreReadActivity extends Activity {
     Story story;

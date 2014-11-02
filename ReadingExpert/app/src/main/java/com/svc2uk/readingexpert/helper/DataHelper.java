@@ -1,11 +1,11 @@
-package lt.vadovauk.readingexpert.app.helper;
+package com.svc2uk.readingexpert.helper;
 
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-import lt.vadovauk.readingexpert.app.domain.UserResult;
+import com.svc2uk.readingexpert.domain.UserResult;
 
 public class DataHelper {
 

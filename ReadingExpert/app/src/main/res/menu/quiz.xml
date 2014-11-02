@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="lt.vadovauk.readingexpert.app.QuizActivity">
+      tools:context="com.svc2uk.readingexpert.QuizActivity">
     <item
         android:id="@+id/action_hint"
         android:showAsAction="always"

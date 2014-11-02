@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app.adapter;
+package com.svc2uk.readingexpert.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,14 +11,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.svc2uk.readingexpert.R;
+import com.svc2uk.readingexpert.domain.Story;
+import com.svc2uk.readingexpert.domain.UserResult;
+import com.svc2uk.readingexpert.helper.DataHelper;
+import com.svc2uk.readingexpert.helper.StorageHelper;
 
 import java.util.ArrayList;
-
-import lt.vadovauk.readingexpert.app.R;
-import lt.vadovauk.readingexpert.app.domain.Story;
-import lt.vadovauk.readingexpert.app.domain.UserResult;
-import lt.vadovauk.readingexpert.app.helper.DataHelper;
-import lt.vadovauk.readingexpert.app.helper.StorageHelper;
 
 public class GridViewAdapter extends BaseAdapter {
 

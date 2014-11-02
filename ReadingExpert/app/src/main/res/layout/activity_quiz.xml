@@ -3,5 +3,5 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="lt.vadovauk.readingexpert.app.QuizActivity"
+    tools:context="com.svc2uk.readingexpert.QuizActivity"
     tools:ignore="MergeRootFrame" />

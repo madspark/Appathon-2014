@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app;
+package com.svc2uk.readingexpert;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.svc2uk.readingexpert.common.NetworkClient;
+import com.svc2uk.readingexpert.domain.Story;
+import com.svc2uk.readingexpert.helper.DataHelper;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -28,10 +31,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import lt.vadovauk.readingexpert.app.common.NetworkClient;
-import lt.vadovauk.readingexpert.app.domain.Story;
-import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
 public class ReadActivity extends Activity {
 

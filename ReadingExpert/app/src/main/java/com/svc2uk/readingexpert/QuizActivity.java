@@ -1,4 +1,4 @@
-package lt.vadovauk.readingexpert.app;
+package com.svc2uk.readingexpert;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -13,8 +13,11 @@ import android.view.MenuItem;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.svc2uk.readingexpert.common.NetworkClient;
+import com.svc2uk.readingexpert.domain.Question;
+import com.svc2uk.readingexpert.domain.Story;
+import com.svc2uk.readingexpert.helper.DataHelper;
 
-import lt.vadovauk.readingexpert.app.domain.Story;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,10 +26,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
-
-import lt.vadovauk.readingexpert.app.common.NetworkClient;
-import lt.vadovauk.readingexpert.app.domain.Question;
-import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
 
 public class QuizActivity extends Activity implements CrosswordFragment.OnResultListener {
