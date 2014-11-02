@@ -72,7 +72,7 @@ public class ReadActivity extends Activity {
         int level = story.getApiId();
         id = story.getApiId();
 
-        adjusted_delay = 5000 - (level - 1) * 500;
+        adjusted_delay = 8000 - (level - 1) * 200;
         getActionBar().setTitle(story.getTitle());
 
         readLineTxt1 = (TextView) findViewById(R.id.read_line_txt1);
