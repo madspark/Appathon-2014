@@ -46,6 +46,7 @@ public class ReadActivity extends Activity {
         content = getIntent().getStringExtra("content");
         id = getIntent().getStringExtra("id");
 
+
         readLineTxt1 = (TextView) findViewById(R.id.read_line_txt1);
         bPrevious = (Button) findViewById(R.id.previous_btn);
         bPause = (Button) findViewById(R.id.pause_btn);
@@ -56,6 +57,7 @@ public class ReadActivity extends Activity {
         timer = new Timer();
         timerTask = generateTask();
         timer.scheduleAtFixedRate(timerTask, 0, DELAY);
+
 
         bPause.setOnClickListener(new View.OnClickListener() {
             @Override
