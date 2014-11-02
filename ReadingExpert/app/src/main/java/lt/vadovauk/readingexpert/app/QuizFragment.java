@@ -4,13 +4,15 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.*;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class QuizFragment extends Fragment {
@@ -21,7 +23,7 @@ public class QuizFragment extends Fragment {
     private String mQuestion;
     private String mAnswer;
 
-    private CrosswordFragment.OnCorrectListener mListener;
+    private CrosswordFragment.OnResultListener mListener;
 
     public static QuizFragment newInstance(String question, String answer) {
         QuizFragment fragment = new QuizFragment();
@@ -95,17 +97,17 @@ public class QuizFragment extends Fragment {
 
     private void checkClick() {
         final EditText answerEditText = (EditText) getView().findViewById(R.id.answer_edit);
-        if (answerEditText.getText().toString().toUpperCase().equals(mAnswer.toUpperCase())) {
+        boolean correct = answerEditText.getText().toString().toUpperCase().equals(mAnswer.toUpperCase());
+        mListener.playSound(correct);
+        if (correct) {
             mListener.onCorrect();
-        } else {
-            Toast.makeText(getActivity(), R.string.incorrect, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mListener = (CrosswordFragment.OnCorrectListener) activity;
+        mListener = (CrosswordFragment.OnResultListener) activity;
     }
 
     @Override
