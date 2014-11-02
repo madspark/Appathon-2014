@@ -9,8 +9,8 @@
     tools:context="lt.vadovauk.readingexpert.app.ReadActivity">
 
     <TextView
-        android:id="@+id/read_line_txt"
-        android:text="Once upon a time"
+        android:id="@+id/read_line_txt1"
+
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Previous"
+
         android:background="@color/secondary_color"
         android:textColor="@color/white"
         android:padding="5dp"
@@ -36,7 +37,7 @@
         android:textColor="@color/white"
         android:layout_toRightOf="@+id/previous_btn"
         android:layout_alignBottom="@+id/previous_btn"
-        android:text="Pause"></Button>
+        android:text="Pause"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
