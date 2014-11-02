@@ -84,10 +84,19 @@ public class ReadActivity extends Activity {
                 if(isPaused && line > 1){
                     line-=2;
                     init(readLineTxt1, lines.get(line));
+                } else if(isPaused && line == 1){
+                    line--;
+                    init(readLineTxt1, lines.get(line));
                 } else if (line > 1) { // not paused, firstly pause, then show previous.
                     timerTask.cancel();
                     isPaused = true;
                     line-=2;
+                    init(readLineTxt1, lines.get(line));
+                    bPause.setText("Play");
+                } else if (line == 1) {
+                    timerTask.cancel();
+                    isPaused = true;
+                    line--;
                     init(readLineTxt1, lines.get(line));
                     bPause.setText("Play");
                 }
