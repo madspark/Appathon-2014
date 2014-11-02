@@ -43,6 +43,7 @@ public class ReadActivity extends Activity {
     ProgressBar progressBar;
     String id;
     private ToolTipView myToolTipView;
+    ToolTipRelativeLayout toolTipRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,6 @@ public class ReadActivity extends Activity {
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-
         bPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,10 +110,14 @@ public class ReadActivity extends Activity {
             }
         });
 
-        ToolTipRelativeLayout toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
+        toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
 
+        showToolTip("tip");
+    }
+
+    private void showToolTip(String tip) {
         ToolTip toolTip = new ToolTip()
-                .withText("A beautiful View")
+                .withText(tip)
                 .withColor(Color.RED)
                 .withShadow();
         myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.read_line_txt1));
