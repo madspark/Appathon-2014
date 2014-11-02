@@ -173,7 +173,7 @@ public class ReadActivity extends Activity {
     }
 
     private void incrementLine() {
-        if (line < lines.size()) {
+        if (currentLine + 1 < lines.size()) {
             line = currentLine + 1;
             init(readLineTxt1, lines.get(line), line);
             if (progressBar.getProgress() < 100) {
