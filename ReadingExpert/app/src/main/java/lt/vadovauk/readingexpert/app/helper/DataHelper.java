@@ -1,13 +1,15 @@
 package lt.vadovauk.readingexpert.app.helper;
 
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class DataHelper {
-    private static final int maxNumberOfChars = 30;
+    private static final int maxNumberOfChars = 50;
 
 
-    public static ArrayList<String> getLines(String content) {
+    public static ArrayList<String> getLines(String content, TextView tv) {
 
         StringTokenizer st = new StringTokenizer(content, " ");
         ArrayList<String> lines = new ArrayList<String>();
@@ -15,17 +17,20 @@ public class DataHelper {
         while (st.hasMoreTokens()) {
             String word = st.nextToken();
 
-            if ((line + " " +
-                    word).length() > maxNumberOfChars) {
+            if ((line + " " + word).length() > maxNumberOfChars) {
                 lines.add(line);
                 line = word;
             } else {
                 line += " " + word;
             }
+            if(!st.hasMoreTokens()){
+                lines.add(line);
+            }
         }
 
         return lines;
     }
+
 
     public static ArrayList<Integer> GetIntegers (String doneStories){
         ArrayList<Integer> ListOfIntegers = new ArrayList<Integer>();
@@ -45,4 +50,5 @@ public class DataHelper {
         }
         return otherAns;
     }
+
 }

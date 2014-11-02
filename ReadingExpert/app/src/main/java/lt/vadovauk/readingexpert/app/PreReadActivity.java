@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -42,7 +43,9 @@ public class PreReadActivity extends Activity {
         });
 
         TextView storyDescription = (TextView) findViewById(R.id.story_description_txt);
-        storyDescription.setText(story.getDescription());
+        storyDescription.setText(story.getDescription()+"..");
 
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBar.setRating((float) 3.5);
     }
 }

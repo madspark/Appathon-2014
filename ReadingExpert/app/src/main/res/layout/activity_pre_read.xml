@@ -48,9 +48,9 @@
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:isIndicator="true"
         android:id="@+id/ratingBar"
         android:layout_below="@+id/story_description_txt"
         android:layout_centerHorizontal="true" />
-
 
 </RelativeLayout>
