@@ -10,6 +10,7 @@ import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ public class ReadActivity extends Activity {
     boolean isPaused = false;
     TimerTask timerTask;
     Timer timer;
-
+    ProgressBar progressBar;
     String id;
 
     @Override
@@ -75,13 +76,14 @@ public class ReadActivity extends Activity {
             }
         });
 
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
 
         bPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isPaused && line > 1){
                     line-=2;
-                    //readLineTxt1.setText(lines.get(line));
                     init(readLineTxt1, lines.get(line));
                 } else if(isPaused && line == 1){
                     line--;
@@ -90,7 +92,6 @@ public class ReadActivity extends Activity {
                     timerTask.cancel();
                     isPaused = true;
                     line-=2;
-                    //readLineTxt1.setText(lines.get(line));
                     init(readLineTxt1, lines.get(line));
                     bPause.setText("Play");
                 } else if (line == 1) {
@@ -112,9 +113,11 @@ public class ReadActivity extends Activity {
                     @Override
                     public void run() {
                         if (line < lines.size()) {
-                            //readLineTxt1.setText(lines.get(line));
                             init(readLineTxt1, lines.get(line));
                             line++;
+                            if (progressBar.getProgress() < 100) {
+                                progressBar.setProgress(line * 100 / lines.size());
+                            }
                         } else {
                             Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
                             intent.putExtra("id", id);
