@@ -15,6 +15,7 @@ import lt.vadovauk.readingexpert.app.domain.Story;
 
 public class PreReadActivity extends Activity {
     Story story;
+    float rating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class PreReadActivity extends Activity {
         setContentView(R.layout.activity_pre_read);
 
         story = (Story) getIntent().getSerializableExtra("story");
+        rating = getIntent().getFloatExtra("rating", 0);
 
         ImageView storyImg = (ImageView) findViewById(R.id.story_img);
         Picasso.with(this).load(story.getImageSource()).into(storyImg);
@@ -43,9 +45,9 @@ public class PreReadActivity extends Activity {
         });
 
         TextView storyDescription = (TextView) findViewById(R.id.story_description_txt);
-        storyDescription.setText(story.getDescription()+"..");
+        storyDescription.setText(story.getDescription() + "..");
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        ratingBar.setRating((float) 3.5);
+        ratingBar.setRating(rating);
     }
 }
