@@ -27,7 +27,7 @@ public class StorageHelper {
                 exists = true;
             }
         }
-        if (exists) {
+        if (!exists) {
             results.add(result);
         }
 

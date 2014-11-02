@@ -22,7 +22,6 @@ import lt.vadovauk.readingexpert.app.helper.StorageHelper;
 
 public class GridViewAdapter extends BaseAdapter {
 
-    String doneStories;
     private final LayoutInflater inflater;
     private ArrayList<Story> stories;
     Activity activity;
@@ -71,7 +70,8 @@ public class GridViewAdapter extends BaseAdapter {
         holder.storyTitleTxt.setText("LEVEL " + (position + 1));
         Picasso.with(activity).load(stories.get(position).getImageSource()).into(holder.storyImg);
 
-        if (DataHelper.contains(results, stories.get(position).getApiId()) || position == 0) {
+        int previous = (position == 0) ? 0 : position - 1;
+        if (DataHelper.contains(results, stories.get(previous).getApiId()) || position == 0) {
             holder.layout.setBackgroundColor(activity.getResources().getColor(R.color.white));
         } else {
             // set the image to be half transparent if the level is not unlocked.
