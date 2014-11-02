@@ -21,6 +21,8 @@ import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 import com.nhaarman.supertooltips.ToolTipView;
 
 import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
@@ -174,7 +176,6 @@ public class ReadActivity extends Activity {
     private ClickableSpan getClickableSpan(final String word) {
         return new ClickableSpan() {
             final String mWord;
-
             {
                 mWord = word;
             }
@@ -207,11 +208,15 @@ public class ReadActivity extends Activity {
         NetworkClient.get("/definitions/get_definition", rp, new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                super.onSuccess(statusCode, headers, responseString);
-                showToolTip(responseString);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    String tip = response.getString("definition");
+                    showToolTip(tip);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                super.onSuccess(statusCode, headers, response);
             }
-
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
