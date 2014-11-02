@@ -18,7 +18,7 @@
     <string name="next">Next</string>
     <string name="action_hint">Hint</string>
     <string name="check">Check</string>
-    <string name="title_activity_result">ResultActivity</string>
+    <string name="title_activity_result">Results</string>
     <string name="crossword_instruction">Cross out the answer</string>
 
 </resources>
