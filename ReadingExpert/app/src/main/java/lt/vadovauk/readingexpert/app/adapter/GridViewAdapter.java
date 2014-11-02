@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 import lt.vadovauk.readingexpert.app.R;
 import lt.vadovauk.readingexpert.app.domain.Story;
-import lt.vadovauk.readingexpert.app.helper.DataHelper;
 import lt.vadovauk.readingexpert.app.helper.StorageHelper;
 
 public class GridViewAdapter extends BaseAdapter {
@@ -31,8 +30,7 @@ public class GridViewAdapter extends BaseAdapter {
         this.stories = stories;
         this.activity = activity;
 
-        doneStories = StorageHelper.readLevels(activity);
-        parsedValues = DataHelper.GetIntegers(doneStories);
+        parsedValues = StorageHelper.readLevels(activity);
 
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

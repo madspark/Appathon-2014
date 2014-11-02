@@ -78,6 +78,7 @@ public class QuizFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (answerEditText.getText().toString().toUpperCase().equals(mAnswer.toUpperCase())) {
+                    Toast.makeText(getActivity(), R.string.correct, Toast.LENGTH_SHORT).show();
                     mListener.onCorrect();
                 } else {
                     Toast.makeText(getActivity(), R.string.incorrect, Toast.LENGTH_SHORT).show();
