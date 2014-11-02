@@ -25,7 +25,8 @@
             android:id="@+id/answer_edit"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -33,7 +34,8 @@
             android:id="@+id/check_button"
             android:textColor="@color/white"
             android:background="@color/secondary_color"
-            android:text="@string/check"/>
+            android:text="@string/check"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     </LinearLayout>
 
