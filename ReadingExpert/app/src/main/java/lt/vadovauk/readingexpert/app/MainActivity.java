@@ -111,4 +111,11 @@ public class MainActivity extends Activity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mGridView != null)
+            mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
+    }
 }
