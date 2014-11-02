@@ -22,7 +22,7 @@ public class CrosswordGridAdapter extends BaseAdapter {
     private static final int DIRECTION_DIAGONAL_LOWER = 2;
     private static final int DIRECTION_DIAGONAL_UPPER = 3;
 
-    private static final int initialColor = Color.parseColor("#939393");
+    private static final int initialColor = Color.parseColor("#8591D5");
     private static final int selectedColor = Color.parseColor("#3F51B5");
 
     private static final String TAG = "CrosswordGridAdapter";
@@ -96,6 +96,7 @@ public class CrosswordGridAdapter extends BaseAdapter {
             textView.setTextSize(40);
             textView.setGravity(Gravity.CENTER);
             textView.setBackgroundColor(initialColor);
+            textView.setTextColor(Color.WHITE);
             textView.setText(String.valueOf(mLetters[i]));
             mViews[i] = textView;
         }
