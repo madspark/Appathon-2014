@@ -16,7 +16,7 @@ public class ReadActivity extends Activity {
     int line = 0;
     TextView readLineTxt;
     ArrayList<String> lines;
-    Timer timer;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +24,12 @@ public class ReadActivity extends Activity {
         setContentView(R.layout.activity_read);
 
         content = getIntent().getStringExtra("content");
+        id = getIntent().getStringExtra("id");
 
         readLineTxt = (TextView) findViewById(R.id.read_line_txt);
         lines = DataHelper.getLines(content);
 
-        timer = new Timer();
+        final Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -39,7 +40,8 @@ public class ReadActivity extends Activity {
                             readLineTxt.setText(lines.get(line));
                             line++;
                         } else {
-                            Intent intent = new Intent(ReadActivity.this, ResultActivity.class);
+                            Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
+                            intent.putExtra("id", id);
                             startActivity(intent);
                             timer.cancel();
                             finish();
@@ -48,11 +50,5 @@ public class ReadActivity extends Activity {
                 });
             }
         }, 0, 1000);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        timer.cancel();
     }
 }

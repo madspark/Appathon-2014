@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -15,16 +16,23 @@ import java.util.ArrayList;
 
 import lt.vadovauk.readingexpert.app.R;
 import lt.vadovauk.readingexpert.app.domain.Story;
+import lt.vadovauk.readingexpert.app.helper.DataHelper;
+import lt.vadovauk.readingexpert.app.helper.StorageHelper;
 
 public class GridViewAdapter extends BaseAdapter {
 
+    String doneStories;
     private final LayoutInflater inflater;
     private ArrayList<Story> stories;
     Activity activity;
+    ArrayList<Integer> parsedValues;
 
     public GridViewAdapter(Activity activity, ArrayList<Story> stories) {
         this.stories = stories;
         this.activity = activity;
+
+        doneStories = StorageHelper.readLevels(activity);
+        parsedValues = DataHelper.GetIntegers(doneStories);
 
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -54,6 +62,7 @@ public class GridViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.story_item, null);
             holder.storyTitleTxt = (TextView) convertView.findViewById(R.id.story_title_txt);
             holder.storyImg = (ImageView) convertView.findViewById(R.id.story_img);
+            holder.layout = (RelativeLayout) convertView.findViewById(R.id.layout);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -62,11 +71,19 @@ public class GridViewAdapter extends BaseAdapter {
         holder.storyTitleTxt.setText("LEVEL " + position);
         Picasso.with(activity).load(stories.get(position).getImageSource()).into(holder.storyImg);
 
+        if (parsedValues.contains(stories.get(position).getApiId()) || position == 0) {
+            holder.layout.setBackgroundColor(activity.getResources().getColor(R.color.white));
+        } else {
+            holder.layout.setBackgroundColor(activity.getResources().getColor(R.color.grey));
+        }
+
         return convertView;
     }
 
     static class ViewHolder {
         TextView storyTitleTxt;
         ImageView storyImg;
+        RelativeLayout layout;
     }
+
 }
