@@ -13,7 +13,7 @@ import lt.vadovauk.readingexpert.app.data.DbHelper;
 
 
 public class Story implements Serializable{
-    private int apiid;
+    private int apiId;
     private String title;
     private String description;
     private int difficulty; //wpm
@@ -21,14 +21,19 @@ public class Story implements Serializable{
     private String imageSource;
     private boolean done;
 
-    public Story(int apiid, String title, String description, int difficulty,
+    public Story(int apiId, String title, String description, int difficulty,
                  String content, String imageSource) {
+        this.apiId = apiId;
         this.title = title;
         this.description = description;
         this.difficulty = difficulty;
         this.content = content;
         this.imageSource = imageSource;
         this.done = false;
+    }
+
+    public int getApiId(){
+        return apiId;
     }
 
     public String getContent() {
@@ -78,7 +83,7 @@ public class Story implements Serializable{
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor c = db.query(DbContract.Story.TABLE_NAME, null, DbContract.Story.COLUMN_APIID + " = ? ",
-                new String[] {Integer.toString(apiid)}, null, null, null);
+                new String[] {Integer.toString(apiId)}, null, null, null);
 
         if(c.moveToFirst()){
             db.close();
@@ -88,7 +93,7 @@ public class Story implements Serializable{
         db = helper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(DbContract.Story.COLUMN_APIID, apiid);
+        cv.put(DbContract.Story.COLUMN_APIID, apiId);
         cv.put(DbContract.Story.COLUMN_TITLE, title);
         cv.put(DbContract.Story.COLUMN_DIFF, difficulty);
         cv.put(DbContract.Story.COLUMN_DONE, false); // Assume story is not completed at the point of insertion

@@ -34,9 +34,15 @@ public class PreReadActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(PreReadActivity.this, ReadActivity.class);
                 intent.putExtra("content", story.getContent());
+                //intent.putExtra("id", story.get);
+
                 startActivity(intent);
                 finish();
             }
         });
+
+        TextView storyDescription = (TextView) findViewById(R.id.story_description_txt);
+        storyDescription.setText(story.getDescription());
+
     }
 }

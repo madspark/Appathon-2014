@@ -35,12 +35,16 @@ public class ReadActivity extends Activity {
     TimerTask timerTask;
     Timer timer;
 
+    String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
 
-        //content = getIntent().getStringExtra("content");
+
+        content = getIntent().getStringExtra("content");
+        id = getIntent().getStringExtra("id");
 
         readLineTxt1 = (TextView) findViewById(R.id.read_line_txt1);
         bPrevious = (Button) findViewById(R.id.previous_btn);
@@ -68,6 +72,7 @@ public class ReadActivity extends Activity {
                 }
             }
         });
+
 
         bPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +105,8 @@ public class ReadActivity extends Activity {
                             init(readLineTxt1, lines.get(line));
                             line++;
                         } else {
-                            Intent intent = new Intent(ReadActivity.this, ResultActivity.class);
+                            Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
+                            intent.putExtra("id", id);
                             startActivity(intent);
                             timer.cancel();
                             finish();

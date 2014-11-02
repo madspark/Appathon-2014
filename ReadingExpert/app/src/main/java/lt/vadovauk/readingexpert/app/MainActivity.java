@@ -9,19 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-
 import com.loopj.android.http.JsonHttpResponseHandler;
-
+import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
+import lt.vadovauk.readingexpert.app.common.NetworkClient;
+import lt.vadovauk.readingexpert.app.domain.Story;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
-import lt.vadovauk.readingexpert.app.common.NetworkClient;
-import lt.vadovauk.readingexpert.app.domain.Story;
 
 public class MainActivity extends Activity {
     Context context = MainActivity.this;
@@ -58,9 +55,10 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.action_crossword_test) {
-            Intent intent = new Intent(this, CrosswordActivity.class);
+        } else if (id == R.id.action_quiz) {
+            Intent intent = new Intent(MainActivity.this, QuizActivity.class);
             startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -84,16 +82,11 @@ public class MainActivity extends Activity {
 
                         Story story = new Story(apiid, title, description, difficulty, content, imageUrl);
                         stories.add(story);
-                        //story.insertIntoDb(context);
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
                 mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
-
             }
 
             @Override

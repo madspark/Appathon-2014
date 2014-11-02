@@ -32,4 +32,23 @@ public class DataHelper {
     }
 
 
+    public static ArrayList<Integer> GetIntegers (String doneStories){
+        ArrayList<Integer> ListOfIntegers = new ArrayList<Integer>();
+        StringTokenizer tokenizer = new StringTokenizer(doneStories, ",");
+        while (tokenizer.hasMoreTokens()){
+            ListOfIntegers.add(Integer.parseInt(tokenizer.nextToken()));
+        }
+        return ListOfIntegers;
+    }
+
+    public static ArrayList<String> getOtherAns(String otherAnswers) {
+        ArrayList<String> otherAns = new ArrayList<String>();
+
+        StringTokenizer st = new StringTokenizer(otherAnswers, ",");
+        while (st.hasMoreTokens()) {
+            otherAns.add(st.nextToken());
+        }
+        return otherAns;
+    }
+
 }

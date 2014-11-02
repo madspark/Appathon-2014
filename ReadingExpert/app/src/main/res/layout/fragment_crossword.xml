@@ -1,9 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:context="lt.vadovauk.readingexpert.app.CrosswordActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="lt.vadovauk.readingexpert.app.CrosswordFragment">
 
     <TextView
         android:id="@+id/question_text_view"
@@ -17,6 +16,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <GridView
+        android:layout_below="@id/question_text_view"
         android:id="@+id/crossword_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,13 +27,14 @@
 
     <Button
         android:id="@+id/next_button"
-        android:layout_gravity="right"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginTop="10dp"
         android:width="120dp"
-        android:text="@string/next"/>
+        android:text="@string/next"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
-</LinearLayout>
+</RelativeLayout>
