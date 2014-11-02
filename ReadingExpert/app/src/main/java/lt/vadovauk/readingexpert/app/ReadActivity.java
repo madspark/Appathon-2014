@@ -21,6 +21,8 @@ import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 import com.nhaarman.supertooltips.ToolTipView;
 
 import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
 public class ReadActivity extends Activity {
 
-    final static int DELAY = 2000; //milliseconds
+    final static int DELAY = 20; //milliseconds
 
     String content = "Once upon a time there were three little pigs and the time came for them to leave home and seek their fortunes. Before they left, their mother told them \" Whatever you do , do it the best that you can because that's the way to get along in the world.";
     int line = 0;
@@ -45,9 +47,10 @@ public class ReadActivity extends Activity {
     TimerTask timerTask;
     Timer timer;
     ProgressBar progressBar;
-    String id;
+    int id;
     private ToolTipView myToolTipView;
     ToolTipRelativeLayout toolTipRelativeLayout;
+    ToolTip toolTip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +59,7 @@ public class ReadActivity extends Activity {
 
 
         content = getIntent().getStringExtra("content");
-        id = getIntent().getStringExtra("iToolTipViewd");
-
+        id = getIntent().getIntExtra("id", 1);
 
         readLineTxt1 = (TextView) findViewById(R.id.read_line_txt1);
         bPrevious = (Button) findViewById(R.id.previous_btn);
@@ -69,7 +71,6 @@ public class ReadActivity extends Activity {
         timer = new Timer();
         timerTask = generateTask();
         timer.scheduleAtFixedRate(timerTask, 0, DELAY);
-
 
         bPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,16 +116,17 @@ public class ReadActivity extends Activity {
         });
 
         toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
-
-        showToolTip("tip");
     }
 
     private void showToolTip(String tip) {
-        ToolTip toolTip = new ToolTip()
+        if (myToolTipView != null)
+            myToolTipView.remove();
+        toolTip = new ToolTip()
                 .withText(tip)
                 .withColor(Color.RED)
                 .withShadow();
         myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.read_line_txt1));
+
     }
 
     private TimerTask generateTask() {
@@ -144,8 +146,8 @@ public class ReadActivity extends Activity {
                             Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
                             intent.putExtra("id", id);
                             startActivity(intent);
-                            timer.cancel();
                             finish();
+                            timerTask.cancel();
                         }
                     }
                 });
@@ -183,11 +185,8 @@ public class ReadActivity extends Activity {
             public void onClick(View widget) {
                 Log.d("tapped on:", mWord);
                 getDefinition(mWord);
-                if (isPaused) { //already paused, button should resume
-                    timerTask = generateTask();
-                    timer.scheduleAtFixedRate(timerTask, 0, DELAY);
-                    isPaused = false;
-                    bPause.setText("Pause");
+                if (isPaused) {
+                    //already paused, do nothing
                 } else {
                     timerTask.cancel();
                     isPaused = true;
@@ -207,11 +206,15 @@ public class ReadActivity extends Activity {
         NetworkClient.get("/definitions/get_definition", rp, new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                super.onSuccess(statusCode, headers, responseString);
-                showToolTip(responseString);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    String tip = response.getString("definition");
+                    showToolTip(tip);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                super.onSuccess(statusCode, headers, response);
             }
-
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {

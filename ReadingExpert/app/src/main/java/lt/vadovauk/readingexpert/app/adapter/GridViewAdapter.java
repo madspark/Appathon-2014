@@ -74,7 +74,8 @@ public class GridViewAdapter extends BaseAdapter {
         if (parsedValues.contains(stories.get(position).getApiId()) || position == 0) {
             holder.layout.setBackgroundColor(activity.getResources().getColor(R.color.white));
         } else {
-            holder.layout.setBackgroundColor(activity.getResources().getColor(R.color.grey));
+            // set the image to be half transparent if the level is not unlocked.
+            holder.layout.setAlpha(0.5f);
         }
 
         return convertView;
