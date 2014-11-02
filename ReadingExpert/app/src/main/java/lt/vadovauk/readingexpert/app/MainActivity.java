@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
 import lt.vadovauk.readingexpert.app.common.NetworkClient;
 import lt.vadovauk.readingexpert.app.domain.Story;
-import lt.vadovauk.readingexpert.app.helper.DataHelper;
 import lt.vadovauk.readingexpert.app.helper.StorageHelper;
 
 public class MainActivity extends Activity {
@@ -40,8 +39,7 @@ public class MainActivity extends Activity {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String doneLevels = StorageHelper.readLevels(context);
-                ArrayList<Integer> done = DataHelper.GetIntegers(doneLevels);
+                ArrayList<Integer> done  = StorageHelper.readLevels(context);
                 if (position == 0 || done.contains(stories.get(position).getApiId())) {
                     Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
                     intent.putExtra("story", stories.get(position));

@@ -16,9 +16,10 @@
 
     <RatingBar
         android:id="@+id/rating_bar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/your_rating_txt" />
 
     <Button

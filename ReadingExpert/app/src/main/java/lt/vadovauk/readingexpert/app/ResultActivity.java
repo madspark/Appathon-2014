@@ -1,6 +1,7 @@
 package lt.vadovauk.readingexpert.app;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,10 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 
+import lt.vadovauk.readingexpert.app.helper.StorageHelper;
+
 
 public class ResultActivity extends Activity {
 
     public static float rating = 5;
+    Context context = ResultActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,11 @@ public class ResultActivity extends Activity {
                 finish();
             }
         });
+
+        int id = getIntent().getIntExtra("id", 0);
+        StorageHelper.addLevel(context, id);
+
+
     }
 
 
