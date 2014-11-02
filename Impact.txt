@@ -1,0 +1,58 @@
+Impact:
+
+We designed our app with the intellectual progression of a child in mind.
+
+We chose not to stop at helping children to learn their ABCs. (although we do expect our app to be very helpful in learning spelling, writing and reading, as intended).
+
+What we are teaching them includes:
+
+- Simple reading skills
+- Expansion of vocabulary
+- Some grammar
+- Critical analysis
+- Basic memory skills
+- And also, some logic (e. g. adapting to different exercise types, such as graphs)
+
+But all in all, we hope that children will have a fun time.
+
+We chose stories that we find very readable and very enjoyable.
+
+And we never assume that children know all and we tried to keep in focus, that children should be expected to learn from our app.
+Not to show some hypothetical knowledge of reading or vocabulary
+(e.g. word look-up, hints)
+
+Originality and market fit:
+
+Our initial market analysis showed that there are many apps dedicated to learning reading. All of which seem very decent.
+
+While we don't aim to decimate our competition, we stand potential to take decent piece of the market share.
+
+Our primary audience is children up to an age of 10, but we believe anyone can learn from it.
+
+That's why we chose reading skills to be one of our priorities, but not our main one. We aim to help a child develop and we aim to
+keep providing even when they're comfortable with reading, they can still learn from using our product.
+(interesting reads, mild brain exercise, extensive vocabulary).
+
+Scalability:
+
+We built our app with scalability in mind.
+As we chose android, we can easily distribute our app via Google Play.
+
+We can endlessly extend our question set because we set up a database for our question set in the cloud.
+New questions can just be obtained on the fly. And if we get an unexpectedly big customer base, we can just opt for a more powerful server.
+Or optionally, a few servers, to ensure optimal uptime.
+
+We can control the direction we are heading in, as we can easily:
+- Add more questions to our levels
+- Choose to opt for more levels while reflecting on our experience of what was successful
+
+While, at this particular time we are not seeking any profit from our product (as we believe education to be a goal in and of itself),
+we could potentially build a company around it. There's endless room and endless directions to expand it. Always something to expand:
+- Adding more questions
+- Adding/improving levels
+- Addressing user feedback
+
+Ways for achieving potential profit:
+- Subscriptions for premium games
+- Ads
+- Ad-free paid app?
