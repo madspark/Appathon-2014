@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -44,10 +42,14 @@ public class MainActivity extends Activity {
                 ArrayList<UserResult> results = StorageHelper.readUserResults(context);
                 int previous = (position == 0) ? 0 : position - 1;
                 if (position == 0 || DataHelper.contains(results, stories.get(previous).getApiId())) {
+                    float rating = 0;
+                    if (DataHelper.contains(results, stories.get(position).getApiId())) {
+                        rating = stories.get(position).getApiId();
+                    }
+
                     Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
                     intent.putExtra("story", stories.get(position));
-                    intent.putExtra("id", "" + id);
-                    intent.putExtra("level", "" + position);
+                    intent.putExtra("rating", rating);
 
                     startActivity(intent);
                 } else {
@@ -57,22 +59,6 @@ public class MainActivity extends Activity {
         });
 
         getStories();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void getStories() {
@@ -106,5 +92,12 @@ public class MainActivity extends Activity {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mGridView != null)
+            mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
     }
 }

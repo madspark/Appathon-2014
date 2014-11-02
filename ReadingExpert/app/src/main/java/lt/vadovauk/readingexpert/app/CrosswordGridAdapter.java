@@ -22,12 +22,6 @@ public class CrosswordGridAdapter extends BaseAdapter {
     private static final int DIRECTION_DIAGONAL_LOWER = 2;
     private static final int DIRECTION_DIAGONAL_UPPER = 3;
 
-    private static final int SELECTION_ZERO = 0;
-    private static final int SELECTION_ONE = 1;
-    private static final int SELECTION_HORIZONTAL = 2;
-    private static final int SELECTION_VERTICAL = 3;
-    private static final int SELECTION_DIAGONAL = 4;
-
     private static final int initialColor = Color.parseColor("#939393");
     private static final int selectedColor = Color.parseColor("#3F51B5");
 
@@ -37,8 +31,8 @@ public class CrosswordGridAdapter extends BaseAdapter {
     private boolean[] mCorrect;
     private TextView[] mViews;
     private Random mRand;
-    private int mSelection;
-    private int mPrevPosition;
+    private int mInitX;
+    private int mInitY;
 
     public CrosswordGridAdapter(Context context, String word) {
         mContext = context;
@@ -50,6 +44,7 @@ public class CrosswordGridAdapter extends BaseAdapter {
         mLetters = new char[GRID_SIZE * GRID_SIZE];
         mCorrect = new boolean[GRID_SIZE * GRID_SIZE];
         mViews = new TextView[GRID_SIZE * GRID_SIZE];
+        mInitX = -1;
 
         mRand = new Random();
         for (int i = 0; i < GRID_SIZE; i++) {
@@ -133,7 +128,7 @@ public class CrosswordGridAdapter extends BaseAdapter {
     }
 
     public boolean checkCorrect() {
-        mSelection = SELECTION_ZERO;
+        mInitX = -1;
         boolean correct = true;
         for (int i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
             if (mCorrect[i] != isSelected(i)) {
@@ -145,59 +140,62 @@ public class CrosswordGridAdapter extends BaseAdapter {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
-                        mViews[i].setBackgroundColor(initialColor);
-                    }
+                    clearSelected();
                 }
             }, 500);
         }
         return correct;
     }
 
-    public void select(int i) {
-        if (mSelection == SELECTION_ZERO) {
-            mSelection = SELECTION_ONE;
-            setSelected(i);
-        } else if (mSelection == SELECTION_ONE && !isSelected(i)) {
-            if (getX(i) == getX(mPrevPosition)) {
-                mSelection = SELECTION_HORIZONTAL;
-                setSelected(i);
-            } else if (getY(i) == getY(mPrevPosition)) {
-                mSelection = SELECTION_VERTICAL;
-                setSelected(i);
-            } else {
-                mSelection = SELECTION_DIAGONAL;
-                setSelected(i);
-            }
-        } else if (mSelection == SELECTION_HORIZONTAL
-                && getX(i) == getX(mPrevPosition)
-                && (getY(i) == getY(mPrevPosition) + 1 || getY(i) == getY(mPrevPosition) - 1)) {
-            setSelected(i);
-        } else if (mSelection == SELECTION_VERTICAL
-                && getY(i) == getY(mPrevPosition)
-                && (getX(i) == getX(mPrevPosition) + 1 || getX(i) == getX(mPrevPosition) - 1)) {
-            setSelected(i);
-        } else if (mSelection == SELECTION_DIAGONAL
-                && (getX(i) == getX(mPrevPosition) + 1 && getY(i) == getY(mPrevPosition) + 1
-                || getX(i) == getX(mPrevPosition) - 1 && getY(i) == getY(mPrevPosition) - 1)) {
-            setSelected(i);
+    public void select(int pos) {
+        int x = pos / GRID_SIZE;
+        int y = pos % GRID_SIZE;
+
+        if (mInitX == -1) {
+            mInitX = x;
+            mInitY = y;
+            setSelected(x, y);
+            return;
         }
+
+        for (int j = 0; j < GRID_SIZE; j++) {
+            if (x == mInitX + j && y == mInitY) {
+                clearSelected();
+                for (int k = 0; k <= j; k++) {
+                    setSelected(mInitX + k, y);
+                }
+                return;
+            }
+            if (x == mInitX && y == mInitY + j) {
+                clearSelected();
+                for (int k = 0; k <= j; k++) {
+                    setSelected(x, mInitY + k);
+                }
+                return;
+            }
+            if (x == mInitX + j && y == mInitY + j) {
+                clearSelected();
+                for (int k = 0; k <= j; k++) {
+                    setSelected(mInitX + k, mInitY + k);
+                }
+                return;
+            }
+        }
+
+        setSelected(x, y);
     }
 
-    private void setSelected(int i) {
-        mPrevPosition = i;
-        mViews[i].setBackgroundColor(selectedColor);
+    private void setSelected(int x, int y) {
+        mViews[GRID_SIZE * x + y].setBackgroundColor(selectedColor);
+    }
+
+    private void clearSelected() {
+        for (int i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+            mViews[i].setBackgroundColor(initialColor);
+        }
     }
 
     private boolean isSelected(int i) {
         return ((ColorDrawable) mViews[i].getBackground()).getColor() == selectedColor;
-    }
-
-    private static int getX(int i) {
-        return i / GRID_SIZE;
-    }
-
-    private static int getY(int i) {
-        return i % GRID_SIZE;
     }
 }

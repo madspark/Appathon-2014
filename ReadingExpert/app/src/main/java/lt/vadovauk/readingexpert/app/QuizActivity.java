@@ -60,7 +60,6 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnResult
 
         id = getIntent().getIntExtra("id", 0);
         getQuestions(id, true);
-        getQuestions(id, false);
     }
 
 
@@ -97,12 +96,22 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnResult
         if (mCurrentQuestionIndex < QUESTION_COUNT) {
             Fragment fragment;
             if (mCurrentQuestionIndex % 2 == 0) {
-                Question question = mCrosswordQuestions.get(mCurrentQuestionIndex / 2);
+                Question question;
+                if (mQuizQuestions.isEmpty()) {
+                    question = mCrosswordQuestions.get(mCurrentQuestionIndex);
+                } else {
+                    question = mCrosswordQuestions.get(mCurrentQuestionIndex / 2);
+                }
                 mCurrentQuestion = question.getQuestion();
                 mCurrentAnswer = question.getAnswer();
                 fragment = CrosswordFragment.newInstance(mCurrentQuestion, mCurrentAnswer);
             } else {
-                Question question = mQuizQuestions.get(mCurrentQuestionIndex / 2);
+                Question question;
+                if (mQuizQuestions.isEmpty()) {
+                    question = mCrosswordQuestions.get(mCurrentQuestionIndex);
+                } else {
+                    question = mQuizQuestions.get(mCurrentQuestionIndex / 2);
+                }
                 mCurrentQuestion = question.getQuestion();
                 mCurrentAnswer = question.getAnswer();
                 fragment = QuizFragment.newInstance(mCurrentQuestion, mCurrentAnswer);
@@ -128,7 +137,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnResult
         super.onDestroy();
     }
 
-    private void getQuestions(int id, final boolean forCrossword) {
+    private void getQuestions(final int id, final boolean forCrossword) {
         RequestParams rp = new RequestParams();
         rp.add("id", "" + id);
         String path;
@@ -164,9 +173,10 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnResult
                 Collections.shuffle(questions);
                 if (forCrossword) {
                     mCrosswordQuestions = questions;
-                    onCorrect();
+                    getQuestions(id, false);
                 } else {
                     mQuizQuestions = questions;
+                    onCorrect();
                 }
             }
 

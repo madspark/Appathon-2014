@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -8,34 +9,73 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="lt.vadovauk.readingexpert.app.PreReadActivity">
 
-    <TextView
-        android:id="@+id/story_title_txt"
-        android:text="Story title"
-        android:layout_width="wrap_content"
-        android:textSize="20sp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:id="@+id/story_img"
-        android:layout_width="match_parent"
-        android:paddingLeft="55dp"
-        android:paddingRight="55dp"
-        android:adjustViewBounds="true"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/story_title_txt"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:id="@+id/story_description_txt"
+    <android.support.v7.widget.CardView
+        android:id="@+id/card1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ratingBar"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:text="Story description" />
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/story_title_txt"
+                android:text="Story title"
+                android:layout_width="wrap_content"
+                android:textSize="30sp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/story_img"
+                android:layout_width="match_parent"
+                android:paddingLeft="55dp"
+                android:paddingRight="55dp"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/card1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+
+            <TextView
+                android:id="@+id/your_rating_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your best score:"
+                android:textSize="15sp"/>
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:id="@+id/ratingBar"
+                 />
+
+            <TextView
+                android:id="@+id/story_description_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:text="Story description" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <Button
         android:id="@+id/proceed_btn"
@@ -45,20 +85,5 @@
         android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/your_rating_txt"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/story_img"
-        android:layout_height="wrap_content"
-        android:text="Your best score:"></TextView>
-
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:isIndicator="true"
-        android:id="@+id/ratingBar"
-        android:layout_below="@id/your_rating_txt"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

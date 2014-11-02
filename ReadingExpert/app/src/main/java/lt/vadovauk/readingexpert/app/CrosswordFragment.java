@@ -19,7 +19,7 @@ public class CrosswordFragment extends Fragment {
 
     private String mQuestion;
     private String mAnswer;
-
+    private boolean mSolved;
     private OnResultListener mListener;
 
     public static CrosswordFragment newInstance(String question, String answer) {
@@ -65,17 +65,21 @@ public class CrosswordFragment extends Fragment {
         grid.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent e) {
-                int action = e.getAction();
-                if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
-                    int position = grid.pointToPosition((int) e.getX(), (int) e.getY());
-                    if (position != GridView.INVALID_POSITION) {
-                        adapter.select(position);
-                    }
-                } else if (action == MotionEvent.ACTION_UP) {
-                    boolean correct = adapter.checkCorrect();
-                    mListener.playSound(correct);
-                    if (correct) {
-                        nextButton.setVisibility(Button.VISIBLE);
+                if (!mSolved) {
+                    int action = e.getAction();
+                    if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
+                        int position = grid.pointToPosition((int) e.getX(), (int) e.getY());
+                        if (position != GridView.INVALID_POSITION) {
+                            adapter.select(position);
+                            grid.invalidate();
+                        }
+                    } else if (action == MotionEvent.ACTION_UP) {
+                        boolean correct = adapter.checkCorrect();
+                        mListener.playSound(correct);
+                        if (correct) {
+                            mSolved = true;
+                            nextButton.setVisibility(Button.VISIBLE);
+                        }
                     }
                 }
                 return true;
@@ -99,6 +103,7 @@ public class CrosswordFragment extends Fragment {
 
     public interface OnResultListener {
         public void playSound(boolean correct);
+
         public void onCorrect();
     }
 

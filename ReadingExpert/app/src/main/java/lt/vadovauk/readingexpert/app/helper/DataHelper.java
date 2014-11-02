@@ -8,28 +8,28 @@ import java.util.StringTokenizer;
 import lt.vadovauk.readingexpert.app.domain.UserResult;
 
 public class DataHelper {
-    private static final int maxNumberOfChars = 50;
 
 
     public static ArrayList<String> getLines(String content, TextView tv) {
 
-        StringTokenizer st = new StringTokenizer(content, " ");
-        ArrayList<String> lines = new ArrayList<String>();
-        String line = "";
-        while (st.hasMoreTokens()) {
-            String word = st.nextToken();
 
-            if ((line + " " + word).length() > maxNumberOfChars) {
-                lines.add(line);
-                line = word;
-            } else {
-                line += " " + word;
+        content = content.replaceAll("\\.(?=[\\da-zA-Z])",". ");
+        content = content.replaceAll("!(?=[\\da-zA-Z])","! ");
+        content = content.replaceAll("\\?(?=[\\da-zA-Z])","? ");
+        //StringTokenizer st = new StringTokenizer(content, " ");
+        String[] words = content.split(" ");
+        String line = "";
+        ArrayList<String> lines = new ArrayList<String>();
+        for(String i : words){
+            if(i.endsWith(".") || i.endsWith("?") || i.endsWith("!")){
+                line += " " + i;
+                lines.add(line.trim());
+                line = "";
             }
-            if (!st.hasMoreTokens()) {
-                lines.add(line);
+            else {
+                line += " " + i;
             }
         }
-
         return lines;
     }
 
