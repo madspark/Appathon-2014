@@ -38,5 +38,9 @@ public class PreReadActivity extends Activity {
                 finish();
             }
         });
+
+        TextView storyDescription = (TextView) findViewById(R.id.story_description_txt);
+        storyDescription.setText(story.getDescription());
+
     }
 }
