@@ -54,6 +54,7 @@ public class ReadActivity extends Activity {
     CardView cardView;
     int id;
     private TextToSpeech mTTS;
+    int currentLine;
 
     @Override
     protected void onPause() {
@@ -82,7 +83,6 @@ public class ReadActivity extends Activity {
         cardView = (CardView) findViewById(R.id.card);
 
         lines = DataHelper.getLines(story.getContent(), readLineTxt1);
-
         timer = new Timer();
         timerTask = generateTask();
         timer.scheduleAtFixedRate(timerTask, 0, adjusted_delay);
@@ -116,23 +116,14 @@ public class ReadActivity extends Activity {
         bPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isPaused && line > 1) {
-                    line -= 2;
-                    init(readLineTxt1, lines.get(line));
-                } else if (isPaused && line == 1) {
-                    line--;
-                    init(readLineTxt1, lines.get(line));
-                } else if (line > 1) { // not paused, firstly pause, then show previous.
+                if (isPaused && currentLine > 0) {
+                    line = currentLine - 1;
+                    init(readLineTxt1, lines.get(line), line);
+                } else if (currentLine > 0) { // not paused, firstly pause, then show previous.
                     timerTask.cancel();
                     isPaused = true;
-                    line -= 2;
-                    init(readLineTxt1, lines.get(line));
-                    bPause.setText("Play");
-                } else if (line == 1) {
-                    timerTask.cancel();
-                    isPaused = true;
-                    line--;
-                    init(readLineTxt1, lines.get(line));
+                    line = currentLine - 1;
+                    init(readLineTxt1, lines.get(line), line);
                     bPause.setText("Play");
                 }
                 if (progressBar.getProgress() > 0) {
@@ -183,8 +174,8 @@ public class ReadActivity extends Activity {
 
     private void incrementLine() {
         if (line < lines.size()) {
-            init(readLineTxt1, lines.get(line));
-            line++;
+            line = currentLine + 1;
+            init(readLineTxt1, lines.get(line), line);
             if (progressBar.getProgress() < 100) {
                 progressBar.setProgress(line * 100 / lines.size());
             }
@@ -198,7 +189,10 @@ public class ReadActivity extends Activity {
         }
     }
 
-    private void init(TextView tv, String text) {
+    private void init(TextView tv, String text, int linenr) {
+
+        currentLine = linenr;
+
         tv.setMovementMethod(LinkMovementMethod.getInstance());
         tv.setText(text, TextView.BufferType.SPANNABLE);
         Spannable spans = (Spannable) tv.getText();
