@@ -33,7 +33,10 @@ import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
 public class ReadActivity extends Activity {
 
-    final static int DELAY = 200; //milliseconds
+    final static int DELAY = 5000; //milliseconds
+    int adjusted_delay;
+
+
 
     String content = "Once upon a time there were three little pigs and the time came for them to leave home and seek their fortunes. Before they left, their mother told them \" Whatever you do , do it the best that you can because that's the way to get along in the world.";
     int line = 0;
@@ -59,6 +62,9 @@ public class ReadActivity extends Activity {
 
         content = getIntent().getStringExtra("content");
         id = getIntent().getIntExtra("id", 1);
+        int level = getIntent().getIntExtra("id", 1);
+
+        adjusted_delay = 5000 - (level - 1) * 500;
 
         readLineTxt1 = (TextView) findViewById(R.id.read_line_txt1);
         bPrevious = (Button) findViewById(R.id.previous_btn);
@@ -71,14 +77,14 @@ public class ReadActivity extends Activity {
 
         timer = new Timer();
         timerTask = generateTask();
-        timer.scheduleAtFixedRate(timerTask, 0, DELAY);
+        timer.scheduleAtFixedRate(timerTask, 0, adjusted_delay);
 
         bPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isPaused) { //already paused, button should resume
                     timerTask = generateTask();
-                    timer.scheduleAtFixedRate(timerTask, 0, DELAY);
+                    timer.scheduleAtFixedRate(timerTask, 0, adjusted_delay);
                     isPaused = false;
                     bPause.setText("Pause");
                 } else {
