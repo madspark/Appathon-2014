@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RatingBar;
 
 
@@ -16,8 +18,16 @@ public class ResultActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.rating_bar);
         ratingBar.setRating(rating);
+
+        Button backToStories = (Button) findViewById(R.id.back_to_stories);
+        backToStories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 

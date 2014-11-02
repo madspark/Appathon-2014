@@ -15,6 +15,7 @@
         android:id="@+id/your_rating_txt" />
 
     <RatingBar
+        android:id="@+id/rating_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numStars="5"
@@ -24,6 +25,8 @@
         android:id="@+id/back_to_stories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@color/secondary_color"
         android:layout_alignParentBottom="true"
         android:text="Back to stories" />
 

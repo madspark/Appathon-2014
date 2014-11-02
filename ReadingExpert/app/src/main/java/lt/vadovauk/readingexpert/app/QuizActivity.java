@@ -36,6 +36,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
     private String mCurrentQuestion;
     private String mCurrentAnswer;
     private TextToSpeech mTTS;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             }
         });
 
-        int id = getIntent().getIntExtra("id", 0);
+        id = getIntent().getIntExtra("id", 0);
         getQuestions(id, true);
         getQuestions(id, false);
     }
@@ -107,6 +108,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             mCurrentQuestionIndex++;
         } else {
             Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
+            intent.putExtra("id", id);
             startActivity(intent);
             finish();
         }
