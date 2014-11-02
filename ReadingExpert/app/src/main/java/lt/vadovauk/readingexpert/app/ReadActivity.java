@@ -3,6 +3,7 @@ package lt.vadovauk.readingexpert.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.Spannable;
@@ -52,6 +53,8 @@ public class ReadActivity extends Activity {
     ProgressBar progressBar;
     CardView cardView;
     int id;
+    private TextToSpeech mTTS;
+
 
 
     @Override
@@ -122,9 +125,31 @@ public class ReadActivity extends Activity {
             }
         });
 
+        mTTS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = mTTS.setLanguage(Locale.US);
+                    mTTS.setSpeechRate(0.7f);
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "TTS language is not supported");
+                    }
+                } else {
+                    Log.e("TTS", "TTS initialization failed");
+                }
+            }
+        });
     }
 
-
+    @Override
+    public void onDestroy() {
+        if (mTTS != null) {
+            mTTS.stop();
+            mTTS.shutdown();
+        }
+        super.onDestroy();
+    }
     private TimerTask generateTask() {
         return new TimerTask() {
             @Override
@@ -196,6 +221,11 @@ public class ReadActivity extends Activity {
         };
     }
 
+    public void onSpeechClick(View v){
+        mTTS.speak(((TextView)cardView.findViewById(R.id.tv_def_title)).getText().toString(),
+                     TextToSpeech.QUEUE_FLUSH, null);
+    }
+
     private void getDefinition(final String mWord) {
         RequestParams rp = new RequestParams();
         rp.add("word", mWord);
@@ -223,4 +253,9 @@ public class ReadActivity extends Activity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
 }
