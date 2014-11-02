@@ -161,10 +161,21 @@ public class ReadActivity extends Activity {
                 Log.d("tapped on:", mWord);
                 Toast.makeText(widget.getContext(), mWord, Toast.LENGTH_SHORT)
                         .show();
+                //Pauses the reading
+                if(isPaused){ //already paused, button should resume
+                    timerTask = generateTask();
+                    timer.scheduleAtFixedRate(timerTask, 0, DELAY);
+                    isPaused = false;
+                    bPause.setText("Pause");
+                } else {
+                    timerTask.cancel();
+                    isPaused = true;
+                    bPause.setText("Play");
+                }
             }
 
             public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
+                //super.updateDrawState(ds);
             }
         };
     }
