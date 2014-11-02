@@ -61,6 +61,7 @@ public class ReadActivity extends Activity {
 
         story = (Story) getIntent().getSerializableExtra("story");
         int level = story.getApiId();
+        id = story.getApiId();
 
         adjusted_delay = 5000 - (level - 1) * 500;
         getActionBar().setTitle(story.getTitle());
