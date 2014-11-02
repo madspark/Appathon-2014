@@ -15,28 +15,25 @@
         android:text="@string/hello_world"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/answer_edit"
+        android:layout_below="@id/question_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/question_text"
-        android:orientation="horizontal">
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:singleLine="true"/>
 
-        <EditText
-            android:id="@+id/answer_edit"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/check_button"
-            android:textColor="@color/white"
-            android:background="@color/secondary_color"
-            android:text="@string/check"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/check_button"
+        android:textColor="@color/white"
+        android:background="@color/secondary_color"
+        android:text="@string/check"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:width="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

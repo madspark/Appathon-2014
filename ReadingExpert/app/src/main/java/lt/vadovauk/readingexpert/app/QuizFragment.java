@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.*;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +54,15 @@ public class QuizFragment extends Fragment {
 
         final EditText answerEditText = (EditText) v.findViewById(R.id.answer_edit);
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        answerEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    checkClick();
+                }
+                return false;
+            }
+        });
         answerEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, final boolean hasFocus) {
@@ -71,22 +78,26 @@ public class QuizFragment extends Fragment {
                 });
             }
         });
-        answerEditText.requestFocus();
 
         Button checkButton = (Button) v.findViewById(R.id.check_button);
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (answerEditText.getText().toString().toUpperCase().equals(mAnswer.toUpperCase())) {
-                    Toast.makeText(getActivity(), R.string.correct, Toast.LENGTH_SHORT).show();
-                    mListener.onCorrect();
-                } else {
-                    Toast.makeText(getActivity(), R.string.incorrect, Toast.LENGTH_SHORT).show();
-                }
+                checkClick();
             }
         });
 
         return v;
+    }
+
+    private void checkClick() {
+        final EditText answerEditText = (EditText) getView().findViewById(R.id.answer_edit);
+        if (answerEditText.getText().toString().toUpperCase().equals(mAnswer.toUpperCase())) {
+            Toast.makeText(getActivity(), R.string.correct, Toast.LENGTH_SHORT).show();
+            mListener.onCorrect();
+        } else {
+            Toast.makeText(getActivity(), R.string.incorrect, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
