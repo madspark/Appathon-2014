@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import lt.vadovauk.readingexpert.app.domain.Story;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +38,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnResult
     private int mCurrentQuestionIndex;
     private String mCurrentAnswer;
     private TextToSpeech mTTS;
+    private Story mStory;
     int id;
 
     @Override
@@ -61,6 +63,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnResult
             }
         });
 
+        mStory = (Story) getIntent().getSerializableExtra("story");
         id = getIntent().getIntExtra("id", 0);
         getQuestions(id, true);
     }
@@ -126,6 +129,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnResult
         } else {
             Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
             intent.putExtra("id", id);
+            intent.putExtra("story", mStory);
             startActivity(intent);
             finish();
         }

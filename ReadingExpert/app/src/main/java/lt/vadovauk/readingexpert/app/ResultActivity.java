@@ -9,8 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 
+import com.squareup.picasso.Picasso;
+import lt.vadovauk.readingexpert.app.domain.Story;
 import lt.vadovauk.readingexpert.app.domain.UserResult;
 import lt.vadovauk.readingexpert.app.helper.StorageHelper;
 
@@ -18,12 +21,15 @@ import lt.vadovauk.readingexpert.app.helper.StorageHelper;
 public class ResultActivity extends Activity {
 
     public static float rating = 5;
-    Context context = ResultActivity.this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        Story story = (Story) getIntent().getSerializableExtra("story");
+        ImageView storyImg = (ImageView) findViewById(R.id.story_img);
+        Picasso.with(this).load(story.getImageSource()).into(storyImg);
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.rating_bar);
         ratingBar.setRating(rating);
@@ -37,7 +43,7 @@ public class ResultActivity extends Activity {
         });
 
         int id = getIntent().getIntExtra("id", 0);
-        StorageHelper.addLevel(context, new UserResult(id, true, rating));
+        StorageHelper.addLevel(this, new UserResult(id, true, rating));
 
         MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.finish);
         mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
