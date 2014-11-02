@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
 import lt.vadovauk.readingexpert.app.common.NetworkClient;
 import lt.vadovauk.readingexpert.app.domain.Story;
+import lt.vadovauk.readingexpert.app.domain.UserResult;
+import lt.vadovauk.readingexpert.app.helper.DataHelper;
 import lt.vadovauk.readingexpert.app.helper.StorageHelper;
 
 public class MainActivity extends Activity {
@@ -39,8 +41,8 @@ public class MainActivity extends Activity {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ArrayList<Integer> done  = StorageHelper.readLevels(context);
-                if (position == 0 || done.contains(stories.get(position).getApiId())) {
+                ArrayList<UserResult> results = StorageHelper.readUserResults(context);
+                if (position == 0 || DataHelper.contains(results, stories.get(position).getApiId())) {
                     Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
                     intent.putExtra("story", stories.get(position));
                     intent.putExtra("id", "" + id);

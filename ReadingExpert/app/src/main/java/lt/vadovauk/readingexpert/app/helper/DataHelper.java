@@ -5,6 +5,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import lt.vadovauk.readingexpert.app.domain.UserResult;
+
 public class DataHelper {
     private static final int maxNumberOfChars = 50;
 
@@ -23,7 +25,7 @@ public class DataHelper {
             } else {
                 line += " " + word;
             }
-            if(!st.hasMoreTokens()){
+            if (!st.hasMoreTokens()) {
                 lines.add(line);
             }
         }
@@ -32,10 +34,10 @@ public class DataHelper {
     }
 
 
-    public static ArrayList<Integer> GetIntegers (String doneStories){
+    public static ArrayList<Integer> GetIntegers(String doneStories) {
         ArrayList<Integer> ListOfIntegers = new ArrayList<Integer>();
         StringTokenizer tokenizer = new StringTokenizer(doneStories, ",");
-        while (tokenizer.hasMoreTokens()){
+        while (tokenizer.hasMoreTokens()) {
             ListOfIntegers.add(Integer.parseInt(tokenizer.nextToken()));
         }
         return ListOfIntegers;
@@ -51,4 +53,13 @@ public class DataHelper {
         return otherAns;
     }
 
+    public static boolean contains(ArrayList<UserResult> results, int storyId) {
+
+        for (int i = 0; i < results.size(); i++) {
+            if (results.get(i).storyId == storyId) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

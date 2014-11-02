@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 
+import lt.vadovauk.readingexpert.app.domain.UserResult;
 import lt.vadovauk.readingexpert.app.helper.StorageHelper;
 
 
@@ -34,9 +35,7 @@ public class ResultActivity extends Activity {
         });
 
         int id = getIntent().getIntExtra("id", 0);
-        StorageHelper.addLevel(context, id);
-
-
+        StorageHelper.addLevel(context, new UserResult(id, true, rating));
     }
 
 
