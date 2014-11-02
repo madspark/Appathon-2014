@@ -129,6 +129,9 @@ public class ReadActivity extends Activity {
                     init(readLineTxt1, lines.get(line));
                     bPause.setText("Play");
                 }
+                if(progressBar.getProgress() > 0){
+                    progressBar.setProgress(line * 100 / lines.size());
+                }
             }
         });
 
@@ -266,9 +269,4 @@ public class ReadActivity extends Activity {
 
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
 }

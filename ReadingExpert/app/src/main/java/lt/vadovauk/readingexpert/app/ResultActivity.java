@@ -2,6 +2,8 @@ package lt.vadovauk.readingexpert.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +38,10 @@ public class ResultActivity extends Activity {
 
         int id = getIntent().getIntExtra("id", 0);
         StorageHelper.addLevel(context, new UserResult(id, true, rating));
+
+        MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.finish);
+        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mPlayer.start();
     }
 
 
