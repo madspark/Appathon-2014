@@ -44,10 +44,14 @@ public class MainActivity extends Activity {
                 ArrayList<UserResult> results = StorageHelper.readUserResults(context);
                 int previous = (position == 0) ? 0 : position - 1;
                 if (position == 0 || DataHelper.contains(results, stories.get(previous).getApiId())) {
+                    float rating = 0;
+                    if (DataHelper.contains(results, stories.get(position).getApiId())) {
+                        rating = stories.get(position).getApiId();
+                    }
+
                     Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
                     intent.putExtra("story", stories.get(position));
-                    intent.putExtra("id", "" + id);
-                    intent.putExtra("level", "" + position);
+                    intent.putExtra("rating", rating);
 
                     startActivity(intent);
                 } else {
@@ -106,5 +110,12 @@ public class MainActivity extends Activity {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mGridView != null)
+            mGridView.setAdapter(new GridViewAdapter(MainActivity.this, stories));
     }
 }
