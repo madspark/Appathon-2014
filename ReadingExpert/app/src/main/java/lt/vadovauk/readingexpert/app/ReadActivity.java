@@ -2,8 +2,10 @@ package lt.vadovauk.readingexpert.app;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
@@ -12,6 +14,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nhaarman.supertooltips.ToolTip;
+import com.nhaarman.supertooltips.ToolTipRelativeLayout;
+import com.nhaarman.supertooltips.ToolTipView;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
@@ -36,6 +42,8 @@ public class ReadActivity extends Activity {
     Timer timer;
     ProgressBar progressBar;
     String id;
+    private ToolTipView myToolTipView;
+    ToolTipRelativeLayout toolTipRelativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +52,7 @@ public class ReadActivity extends Activity {
 
 
         content = getIntent().getStringExtra("content");
-        id = getIntent().getStringExtra("id");
+        id = getIntent().getStringExtra("iToolTipViewd");
 
 
         readLineTxt1 = (TextView) findViewById(R.id.read_line_txt1);
@@ -62,7 +70,7 @@ public class ReadActivity extends Activity {
         bPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isPaused){ //already paused, button should resume
+                if (isPaused) { //already paused, button should resume
                     timerTask = generateTask();
                     timer.scheduleAtFixedRate(timerTask, 0, DELAY);
                     isPaused = false;
@@ -77,20 +85,19 @@ public class ReadActivity extends Activity {
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-
         bPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isPaused && line > 1){
-                    line-=2;
+                if (isPaused && line > 1) {
+                    line -= 2;
                     init(readLineTxt1, lines.get(line));
-                } else if(isPaused && line == 1){
+                } else if (isPaused && line == 1) {
                     line--;
                     init(readLineTxt1, lines.get(line));
                 } else if (line > 1) { // not paused, firstly pause, then show previous.
                     timerTask.cancel();
                     isPaused = true;
-                    line-=2;
+                    line -= 2;
                     init(readLineTxt1, lines.get(line));
                     bPause.setText("Play");
                 } else if (line == 1) {
@@ -102,9 +109,21 @@ public class ReadActivity extends Activity {
                 }
             }
         });
+
+        toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
+
+        showToolTip("tip");
     }
 
-    private TimerTask generateTask(){
+    private void showToolTip(String tip) {
+        ToolTip toolTip = new ToolTip()
+                .withText(tip)
+                .withColor(Color.RED)
+                .withShadow();
+        myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.read_line_txt1));
+    }
+
+    private TimerTask generateTask() {
         return new TimerTask() {
             @Override
             public void run() {
@@ -142,7 +161,6 @@ public class ReadActivity extends Activity {
             String possibleWord = text.substring(start, end);
             if (Character.isLetterOrDigit(possibleWord.charAt(0))) {
                 ClickableSpan clickSpan = getClickableSpan(possibleWord);
-
                 spans.setSpan(clickSpan, start, end,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
@@ -152,6 +170,7 @@ public class ReadActivity extends Activity {
     private ClickableSpan getClickableSpan(final String word) {
         return new ClickableSpan() {
             final String mWord;
+
             {
                 mWord = word;
             }
@@ -161,7 +180,26 @@ public class ReadActivity extends Activity {
                 Log.d("tapped on:", mWord);
                 Toast.makeText(widget.getContext(), mWord, Toast.LENGTH_SHORT)
                         .show();
+                //pauses the reading when a word is clicked.
+                if(isPaused){ //already paused, button should resume
+                    timerTask = generateTask();
+                    timer.scheduleAtFixedRate(timerTask, 0, DELAY);
+                    isPaused = false;
+                    bPause.setText("Pause");
+                } else {
+                    timerTask.cancel();
+                    isPaused = true;
+                    bPause.setText("Play");
+                }
+            }
+
+            public void updateDrawState(TextPaint ds) {
+                //super.updateDrawState(ds);
             }
         };
     }
+
+
+
+
 }
