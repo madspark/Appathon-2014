@@ -92,7 +92,7 @@ public class CrosswordGridAdapter extends BaseAdapter {
 
         for (int i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
             TextView textView = new TextView(mContext);
-            textView.setHeight(150);
+            //textView.setHeight(150);
             textView.setTextSize(40);
             textView.setGravity(Gravity.CENTER);
             textView.setBackgroundColor(initialColor);
