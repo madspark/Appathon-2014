@@ -35,7 +35,7 @@ import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
 public class ReadActivity extends Activity {
 
-    final static int DELAY = 2000; //milliseconds
+    final static int DELAY = 20; //milliseconds
 
     String content = "Once upon a time there were three little pigs and the time came for them to leave home and seek their fortunes. Before they left, their mother told them \" Whatever you do , do it the best that you can because that's the way to get along in the world.";
     int line = 0;
@@ -47,7 +47,7 @@ public class ReadActivity extends Activity {
     TimerTask timerTask;
     Timer timer;
     ProgressBar progressBar;
-    String id;
+    int id;
     private ToolTipView myToolTipView;
     ToolTipRelativeLayout toolTipRelativeLayout;
     ToolTip toolTip;
@@ -59,8 +59,7 @@ public class ReadActivity extends Activity {
 
 
         content = getIntent().getStringExtra("content");
-        id = getIntent().getStringExtra("iToolTipViewd");
-
+        id = getIntent().getIntExtra("id", 1);
 
         readLineTxt1 = (TextView) findViewById(R.id.read_line_txt1);
         bPrevious = (Button) findViewById(R.id.previous_btn);
@@ -72,7 +71,6 @@ public class ReadActivity extends Activity {
         timer = new Timer();
         timerTask = generateTask();
         timer.scheduleAtFixedRate(timerTask, 0, DELAY);
-
 
         bPause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,8 +146,8 @@ public class ReadActivity extends Activity {
                             Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
                             intent.putExtra("id", id);
                             startActivity(intent);
-                            timer.cancel();
                             finish();
+                            timerTask.cancel();
                         }
                     }
                 });
