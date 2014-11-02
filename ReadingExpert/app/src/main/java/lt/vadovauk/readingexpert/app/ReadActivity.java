@@ -56,7 +56,6 @@ public class ReadActivity extends Activity {
     private TextToSpeech mTTS;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +97,14 @@ public class ReadActivity extends Activity {
             }
         });
 
+        Button nextBtn = (Button) findViewById(R.id.next_button);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                incrementLine();
+            }
+        });
+
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         bPrevious.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +129,7 @@ public class ReadActivity extends Activity {
                     init(readLineTxt1, lines.get(line));
                     bPause.setText("Play");
                 }
-                if(progressBar.getProgress() > 0){
+                if (progressBar.getProgress() > 0) {
                     progressBar.setProgress(line * 100 / lines.size());
                 }
             }
@@ -153,6 +160,7 @@ public class ReadActivity extends Activity {
         }
         super.onDestroy();
     }
+
     private TimerTask generateTask() {
         return new TimerTask() {
             @Override
@@ -160,23 +168,27 @@ public class ReadActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (line < lines.size()) {
-                            init(readLineTxt1, lines.get(line));
-                            line++;
-                            if (progressBar.getProgress() < 100) {
-                                progressBar.setProgress(line * 100 / lines.size());
-                            }
-                        } else {
-                            Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
-                            intent.putExtra("id", id);
-                            startActivity(intent);
-                            finish();
-                            timerTask.cancel();
-                        }
+                        incrementLine();
                     }
                 });
             }
         };
+    }
+
+    private void incrementLine() {
+        if (line < lines.size()) {
+            init(readLineTxt1, lines.get(line));
+            line++;
+            if (progressBar.getProgress() < 100) {
+                progressBar.setProgress(line * 100 / lines.size());
+            }
+        } else {
+            Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
+            intent.putExtra("id", id);
+            startActivity(intent);
+            finish();
+            timerTask.cancel();
+        }
     }
 
     private void init(TextView tv, String text) {
@@ -224,9 +236,9 @@ public class ReadActivity extends Activity {
         };
     }
 
-    public void onSpeechClick(View v){
-        mTTS.speak(((TextView)cardView.findViewById(R.id.tv_def_title)).getText().toString(),
-                     TextToSpeech.QUEUE_FLUSH, null);
+    public void onSpeechClick(View v) {
+        mTTS.speak(((TextView) cardView.findViewById(R.id.tv_def_title)).getText().toString(),
+                TextToSpeech.QUEUE_FLUSH, null);
     }
 
     private void getDefinition(final String mWord) {
