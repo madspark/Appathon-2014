@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="lt.vadovauk.readingexpert.app.ResultActivity">
+
+    <TextView
+        android:text="Your rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/your_rating_txt" />
+
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:layout_below="@+id/your_rating_txt" />
+
+    <Button
+        android:id="@+id/back_to_stories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@color/secondary_color"
+        android:layout_alignParentBottom="true"
+        android:text="Back to stories" />
+
+</RelativeLayout>

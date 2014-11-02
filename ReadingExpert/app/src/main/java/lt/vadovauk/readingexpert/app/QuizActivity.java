@@ -2,6 +2,7 @@ package lt.vadovauk.readingexpert.app;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -35,6 +36,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
     private String mCurrentQuestion;
     private String mCurrentAnswer;
     private TextToSpeech mTTS;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             }
         });
 
-        int id = getIntent().getIntExtra("id", 0);
+        id = getIntent().getIntExtra("id", 0);
         getQuestions(id, true);
         getQuestions(id, false);
     }
@@ -78,6 +80,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_hint) {
+            ResultActivity.rating = (float) (ResultActivity.rating - 0.5);
             speakOut();
             return true;
         }
@@ -104,6 +107,9 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
                     .commit();
             mCurrentQuestionIndex++;
         } else {
+            Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
+            intent.putExtra("id", id);
+            startActivity(intent);
             finish();
         }
     }
@@ -119,7 +125,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
 
     private void getQuestions(int id, final boolean forCrossword) {
         RequestParams rp = new RequestParams();
-        rp.add("id", ""+id);
+        rp.add("id", "" + id);
         String path;
         if (forCrossword) {
             path = "/stories/crossword_questions_by_id";
