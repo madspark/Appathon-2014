@@ -33,6 +33,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:width="120dp"
         android:text="@string/next"
+        android:textColor="@color/white"
+        android:background="@color/secondary_color"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>

@@ -58,7 +58,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             }
         });
 
-        String id = getIntent().getStringExtra("id");
+        int id = getIntent().getIntExtra("id", 1);
         getQuestions(id, true);
         getQuestions(id, false);
     }
@@ -117,9 +117,9 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
         super.onDestroy();
     }
 
-    private void getQuestions(String id, final boolean forCrossword) {
+    private void getQuestions(int id, final boolean forCrossword) {
         RequestParams rp = new RequestParams();
-        rp.add("id", id);
+        rp.add("id", ""+id);
         String path;
         if (forCrossword) {
             path = "/stories/crossword_questions_by_id";
