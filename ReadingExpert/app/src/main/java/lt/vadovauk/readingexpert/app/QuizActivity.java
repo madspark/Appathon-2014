@@ -29,8 +29,9 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
 
     private static final int QUESTION_COUNT = 5;
 
-    private ArrayList<Question> mQuestions;
-    private int mQuestionId;
+    private ArrayList<Question> mCrosswordQuestions;
+    private ArrayList<Question> mQuizQuestions;
+    private int mCurrentQuestionIndex;
     private String mCurrentQuestion;
     private String mCurrentAnswer;
     private TextToSpeech mTTS;
@@ -57,14 +58,14 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             }
         });
 
-        mQuestions = new ArrayList<Question>();
-        getQuestions(getIntent().getStringExtra("id"));
+        String id = getIntent().getStringExtra("id");
+        getQuestions(id, true);
+        getQuestions(id, false);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.quiz, menu);
         return true;
     }
@@ -85,20 +86,23 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
 
     @Override
     public void onCorrect() {
-        if (mQuestionId < QUESTION_COUNT) {
+        if (mCurrentQuestionIndex < QUESTION_COUNT) {
             Fragment fragment;
-            Question question = mQuestions.get(mQuestionId);
-            mCurrentQuestion = question.getQuestion();
-            mCurrentAnswer = question.getAnswer();
-            if (mQuestionId % 2 == 0) {
+            if (mCurrentQuestionIndex % 2 == 0) {
+                Question question = mCrosswordQuestions.get(mCurrentQuestionIndex / 2);
+                mCurrentQuestion = question.getQuestion();
+                mCurrentAnswer = question.getAnswer();
                 fragment = CrosswordFragment.newInstance(mCurrentQuestion, mCurrentAnswer);
             } else {
+                Question question = mQuizQuestions.get(mCurrentQuestionIndex / 2);
+                mCurrentQuestion = question.getQuestion();
+                mCurrentAnswer = question.getAnswer();
                 fragment = QuizFragment.newInstance(mCurrentQuestion, mCurrentAnswer);
             }
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, fragment)
                     .commit();
-            mQuestionId++;
+            mCurrentQuestionIndex++;
         } else {
             finish();
         }
@@ -113,11 +117,17 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
         super.onDestroy();
     }
 
-    private void getQuestions(String id) {
+    private void getQuestions(String id, final boolean forCrossword) {
         RequestParams rp = new RequestParams();
         rp.add("id", id);
-        NetworkClient.get("/stories/get_", rp, new JsonHttpResponseHandler() {
-
+        String path;
+        if (forCrossword) {
+            path = "/stories/crossword_questions_by_id";
+        } else {
+            path = "/stories/questions_by_id";
+        }
+        final ArrayList<Question> questions = new ArrayList<Question>();
+        NetworkClient.get(path, rp, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
@@ -133,15 +143,20 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
                         ArrayList<String> otherAns = DataHelper.getOtherAns(otherAnswers);
 
                         Question question = new Question(apiid, storyId, questionContent, correctAnswer, otherAns);
-                        mQuestions.add(question);
+                        questions.add(question);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-                Collections.shuffle(mQuestions);
-                onCorrect();
+                Collections.shuffle(questions);
+                if (forCrossword) {
+                    mCrosswordQuestions = questions;
+                    onCorrect();
+                } else {
+                    mQuizQuestions = questions;
+                }
             }
 
             @Override
