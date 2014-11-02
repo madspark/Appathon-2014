@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
                 if (position == 0 || DataHelper.contains(results, stories.get(previous).getApiId())) {
                     float rating = 0;
                     if (DataHelper.contains(results, stories.get(position).getApiId())) {
-                        rating = stories.get(position).getApiId();
+                        rating = results.get(position).bestResult;
                     }
 
                     Intent intent = new Intent(MainActivity.this, PreReadActivity.class);

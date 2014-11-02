@@ -23,9 +23,10 @@ public class StorageHelper {
         boolean exists = false;
         for (int i = 0; i < results.size(); i++) {
             if (results.get(i).storyId == result.storyId) {
-                if (result.bestResult > results.get(i).bestResult)
+                if (result.bestResult > results.get(i).bestResult) {
                     results.get(i).bestResult = result.bestResult;
-                exists = true;
+                    exists = true;
+                }
             }
         }
         if (!exists) {
