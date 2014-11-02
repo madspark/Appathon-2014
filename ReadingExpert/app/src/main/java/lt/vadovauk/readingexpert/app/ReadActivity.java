@@ -55,6 +55,12 @@ public class ReadActivity extends Activity {
     int id;
     private TextToSpeech mTTS;
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+        timerTask.cancel();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
