@@ -59,7 +59,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             }
         });
 
-        int id = getIntent().getIntExtra("id", 1);
+        int id = getIntent().getIntExtra("id", 0);
         getQuestions(id, true);
         getQuestions(id, false);
     }
