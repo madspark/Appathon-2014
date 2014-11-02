@@ -42,7 +42,8 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ArrayList<UserResult> results = StorageHelper.readUserResults(context);
-                if (position == 0 || DataHelper.contains(results, stories.get(position).getApiId())) {
+                int previous = (position == 0) ? 0 : position - 1;
+                if (position == 0 || DataHelper.contains(results, stories.get(previous).getApiId())) {
                     Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
                     intent.putExtra("story", stories.get(position));
                     intent.putExtra("id", "" + id);
