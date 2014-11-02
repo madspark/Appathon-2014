@@ -13,11 +13,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.nhaarman.supertooltips.ToolTip;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 import com.nhaarman.supertooltips.ToolTipView;
+
+import org.apache.http.Header;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import lt.vadovauk.readingexpert.app.common.NetworkClient;
 import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
 public class ReadActivity extends Activity {
@@ -178,10 +182,8 @@ public class ReadActivity extends Activity {
             @Override
             public void onClick(View widget) {
                 Log.d("tapped on:", mWord);
-                Toast.makeText(widget.getContext(), mWord, Toast.LENGTH_SHORT)
-                        .show();
-                //pauses the reading when a word is clicked.
-                if(isPaused){ //already paused, button should resume
+                getDefinition(mWord);
+                if (isPaused) { //already paused, button should resume
                     timerTask = generateTask();
                     timer.scheduleAtFixedRate(timerTask, 0, DELAY);
                     isPaused = false;
@@ -199,7 +201,24 @@ public class ReadActivity extends Activity {
         };
     }
 
+    private void getDefinition(String mWord) {
+        RequestParams rp = new RequestParams();
+        rp.add("word", mWord);
+        NetworkClient.get("/definitions/get_definition", rp, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                super.onSuccess(statusCode, headers, responseString);
+                showToolTip(responseString);
+            }
 
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+
+    }
 
 }
