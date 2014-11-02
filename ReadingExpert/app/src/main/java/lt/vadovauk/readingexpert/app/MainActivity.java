@@ -67,6 +67,7 @@ public class MainActivity extends Activity {
             return true;
         } else if (id == R.id.action_quiz) {
             Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+            intent.putExtra("id", "6");
             startActivity(intent);
             return true;
         }

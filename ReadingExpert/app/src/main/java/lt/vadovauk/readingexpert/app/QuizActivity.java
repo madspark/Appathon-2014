@@ -71,9 +71,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.action_hint) {
+        if (id == R.id.action_hint) {
             speakOut();
             return true;
         }
@@ -111,7 +109,6 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
     }
 
     private void getQuestions(String id) {
-
         RequestParams rp = new RequestParams();
         rp.add("id", id);
         NetworkClient.get("/stories/get_", rp, new JsonHttpResponseHandler() {
