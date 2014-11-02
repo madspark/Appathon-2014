@@ -42,12 +42,12 @@ module ReadingExpert
       end
     end
 
-    def self.get_questions_by_id(id)
+    def self.get_questions_by_id_where(id, argument)
       begin
         db = Mysql.real_connect('localhost', 'rails', 'kXI6cjTJCO', 'rails')
  
         id = id.to_s
-        query = 'SELECT * FROM Questions WHERE story_id = ' + id
+        query = 'SELECT * FROM Questions WHERE story_id = ' + id + ' AND ' + argument
 
         results = db.query(query)
 
@@ -70,7 +70,7 @@ module ReadingExpert
  	     
         start_index = page_string.index("<span class=\"def\">")
 	if start_index == nil
-          "Sorry, no definition found."
+          {:definition => "Sorry, no definition found."}
         else
           stop_index = page_string.index("</span>", start_index)
       
@@ -98,11 +98,11 @@ module ReadingExpert
           end
 
           result[0] = result[0].capitalize
-          result
+          {:definition => result}
         end
       end
       rescue 
-        "Sorry, no definition found."
+        {:definition => "Sorry, no definition found."}
       end
     end
 
@@ -119,11 +119,14 @@ module ReadingExpert
       params do
         requires :id, type: Integer
       end
-      route_param :question_by_id do
-        get do
-          API.get_questions_by_id(params['id'])
-        end
+      get :questions_by_id do
+        API.get_questions_by_id_where(params['id'], 'LENGTH(correct_answer) > 6')
       end
+
+      get :crossword_questions_by_id do
+        API.get_questions_by_id_where(params['id'], 'LENGTH(correct_answer) <= 6')
+      end
+
     end
 
     resource :definitions do
