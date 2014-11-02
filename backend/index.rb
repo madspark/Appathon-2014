@@ -1,6 +1,7 @@
 require 'grape'
 require 'json'
 require 'mysql'
+require 'open-uri'
 
 module ReadingExpert
   class API < Grape::API
@@ -15,6 +16,7 @@ module ReadingExpert
 
         response = []
         results.each_hash do |row|
+          row['description'] = row['content'].split(".")[0] + "."
           response.push(row)
         end
         response
@@ -46,7 +48,7 @@ module ReadingExpert
  
         id = id.to_s
         query = 'SELECT * FROM Questions WHERE story_id = ' + id
-        puts query
+
         results = db.query(query)
 
         response = []
@@ -56,6 +58,51 @@ module ReadingExpert
         response
       ensure
         db.close
+      end
+    end
+
+    def self.get_definition(word)
+      url = 'http://dictionary.cambridge.org/search/british/direct/?q=' + word
+
+      begin
+      open(url) do |f|
+        page_string = f.read
+ 	     
+        start_index = page_string.index("<span class=\"def\">")
+	if start_index == nil
+          "Sorry, no definition found."
+        else
+          stop_index = page_string.index("</span>", start_index)
+      
+          page_string = page_string[start_index..stop_index]
+        
+          result = ''
+          open_bracket = false
+          page_string.each_char do |chr|
+            if chr == '<'
+              open_bracket = true
+            end
+            if !open_bracket
+              result += chr
+            end
+            if chr == '>'
+              open_bracket = false
+            end
+          end
+          result.rstrip!
+          
+          if result[-1] == ":"
+            result[-1] = "."
+          else
+            result += "."
+          end
+
+          result[0] = result[0].capitalize
+          result
+        end
+      end
+      rescue 
+        "Sorry, no definition found."
       end
     end
 
@@ -74,10 +121,21 @@ module ReadingExpert
       end
       route_param :question_by_id do
         get do
-          puts params['id'] 
           API.get_questions_by_id(params['id'])
         end
       end
+    end
+
+    resource :definitions do
+      params do
+        requires :word, type: String
+      end
+      route_param :get_definition do
+        get do 
+          API.get_definition(params['word'])
+        end
+      end
+
     end
 
   end
