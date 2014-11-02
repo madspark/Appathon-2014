@@ -207,7 +207,7 @@ public class ReadActivity extends Activity {
 
             @Override
             public void onClick(View widget) {
-                Log.d("tapped on:", mWord);
+                //Log.d("tapped on:", mWord);
                 getDefinition(mWord);
                 if (isPaused) {
                     //already paused, do nothing
