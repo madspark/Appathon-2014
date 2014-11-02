@@ -71,12 +71,11 @@ public class GridViewAdapter extends BaseAdapter {
         holder.storyTitleTxt.setText("LEVEL " + position);
         Picasso.with(activity).load(stories.get(position).getImageSource()).into(holder.storyImg);
 
-        if (parsedValues.contains(stories.get(position).getApiId())) {
+        if (parsedValues.contains(stories.get(position).getApiId()) || position == 0) {
             holder.layout.setBackgroundColor(activity.getResources().getColor(R.color.white));
         } else {
             holder.layout.setBackgroundColor(activity.getResources().getColor(R.color.grey));
         }
-
 
         return convertView;
     }

@@ -7,17 +7,22 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import lt.vadovauk.readingexpert.app.common.NetworkClient;
-import lt.vadovauk.readingexpert.app.domain.Question;
-import lt.vadovauk.readingexpert.app.helper.DataHelper;
+
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Locale;
+
+import lt.vadovauk.readingexpert.app.common.NetworkClient;
+import lt.vadovauk.readingexpert.app.domain.Question;
+import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
 
 public class QuizActivity extends Activity implements CrosswordFragment.OnCorrectListener {
@@ -54,7 +59,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
 
         mQuestions = new ArrayList<Question>();
 
-        getQuestions();
+        //getQuestions();
     }
 
 
