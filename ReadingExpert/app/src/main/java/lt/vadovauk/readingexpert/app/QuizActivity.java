@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import lt.vadovauk.readingexpert.app.common.NetworkClient;
 import lt.vadovauk.readingexpert.app.domain.Question;
 import lt.vadovauk.readingexpert.app.helper.DataHelper;
@@ -16,17 +17,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Locale;
+import java.util.*;
 
 
 public class QuizActivity extends Activity implements CrosswordFragment.OnCorrectListener {
 
-    private static final int FRAGMENT_COUNT = 5;
+    private static final int QUESTION_COUNT = 5;
 
-    private Fragment[] mFragments;
-    private int mCurrentFragment;
     private ArrayList<Question> mQuestions;
+    private int mQuestionId;
+    private String mCurrentQuestion;
+    private String mCurrentAnswer;
     private TextToSpeech mTTS;
 
     @Override
@@ -38,7 +39,6 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             @Override
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
-
                     int result = mTTS.setLanguage(Locale.US);
                     //tts.setPitch(5);
                     //tts.setSpeechRate(2);
@@ -52,18 +52,9 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             }
         });
 
-        mFragments = new Fragment[FRAGMENT_COUNT];
-        mFragments[0] = CrosswordFragment.newInstance("What is Harry's last name?", "Potter");
-        mFragments[1] = QuizFragment.newInstance("What is Harry's last name?", "Potter");
-        mFragments[2] = CrosswordFragment.newInstance("What is Harry's last name?", "Potter");
-        mFragments[3] = QuizFragment.newInstance("What is Harry's last name?", "Potter");
-        mFragments[4] = CrosswordFragment.newInstance("What is Harry's last name?", "Potter");
+        mQuestions = new ArrayList<Question>();
 
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, mFragments[0])
-                    .commit();
-        }
+        getQuestions();
     }
 
 
@@ -75,7 +66,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
     }
 
     private void speakOut() {
-        mTTS.speak("Hello children", TextToSpeech.QUEUE_FLUSH, null);
+        mTTS.speak(mCurrentAnswer, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override
@@ -92,11 +83,20 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
 
     @Override
     public void onCorrect() {
-        mCurrentFragment++;
-        if (mCurrentFragment < FRAGMENT_COUNT) {
+        if (mQuestionId < QUESTION_COUNT) {
+            Fragment fragment;
+            Question question = mQuestions.get(mQuestionId);
+            mCurrentQuestion = question.getQuestion();
+            mCurrentAnswer = question.getAnswer();
+            if (mQuestionId % 2 == 0) {
+                fragment = CrosswordFragment.newInstance(mCurrentQuestion, mCurrentAnswer);
+            } else {
+                fragment = QuizFragment.newInstance(mCurrentQuestion, mCurrentAnswer);
+            }
             getFragmentManager().beginTransaction()
-                    .replace(R.id.container, mFragments[mCurrentFragment])
+                    .replace(R.id.container, fragment)
                     .commit();
+            mQuestionId++;
         } else {
             finish();
         }
@@ -111,8 +111,11 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
         super.onDestroy();
     }
 
-    private void getQuestions() {
-        NetworkClient.get("/stories/get_all_questions", null, new JsonHttpResponseHandler() {
+    private void getQuestions(String id) {
+
+        RequestParams rp = new RequestParams();
+        rp.add("id", id);
+        NetworkClient.get("/stories/get_", rp, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
@@ -120,7 +123,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject storyJSON = response.getJSONObject(i);
-                        int apiid = Integer.parseInt(storyJSON.getString("id"));
+                        int apiid = Integer.parseInt(storyJSON.getString("Qid"));
                         int storyId = Integer.parseInt(storyJSON.getString("story_id"));
                         String questionContent = storyJSON.getString("Qcontent");
                         String correctAnswer = storyJSON.getString("correct_answer");
@@ -135,6 +138,9 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
                         e.printStackTrace();
                     }
                 }
+
+                Collections.shuffle(mQuestions);
+                onCorrect();
             }
 
             @Override

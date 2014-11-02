@@ -16,6 +16,7 @@ public class ReadActivity extends Activity {
     int line = 0;
     TextView readLineTxt;
     ArrayList<String> lines;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class ReadActivity extends Activity {
         setContentView(R.layout.activity_read);
 
         content = getIntent().getStringExtra("content");
+         id = getIntent().getStringExtra("id");
 
         readLineTxt = (TextView) findViewById(R.id.read_line_txt);
         lines = DataHelper.getLines(content);
@@ -39,6 +41,7 @@ public class ReadActivity extends Activity {
                             line++;
                         } else {
                             Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
+                            intent.putExtra("id", id);
                             startActivity(intent);
                             timer.cancel();
                             finish();
