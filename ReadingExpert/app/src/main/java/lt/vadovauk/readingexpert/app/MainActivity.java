@@ -47,6 +47,8 @@ public class MainActivity extends Activity {
                     Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
                     intent.putExtra("story", stories.get(position));
                     intent.putExtra("id", "" + id);
+                    intent.putExtra("level", "" + position);
+
                     startActivity(intent);
                 } else {
                     Toast.makeText(context, "You need to complete other levels first", Toast.LENGTH_SHORT).show();

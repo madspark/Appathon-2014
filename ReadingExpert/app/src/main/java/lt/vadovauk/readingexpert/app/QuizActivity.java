@@ -3,15 +3,18 @@ package lt.vadovauk.readingexpert.app;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
+import lt.vadovauk.readingexpert.app.common.NetworkClient;
+import lt.vadovauk.readingexpert.app.domain.Question;
+import lt.vadovauk.readingexpert.app.helper.DataHelper;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,12 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
-import lt.vadovauk.readingexpert.app.common.NetworkClient;
-import lt.vadovauk.readingexpert.app.domain.Question;
-import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
-
-public class QuizActivity extends Activity implements CrosswordFragment.OnCorrectListener {
+public class QuizActivity extends Activity implements CrosswordFragment.OnResultListener {
 
     private static final int QUESTION_COUNT = 5;
 
@@ -48,8 +47,7 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
                     int result = mTTS.setLanguage(Locale.US);
-                    //tts.setPitch(5);
-                    //tts.setSpeechRate(2);
+                    mTTS.setSpeechRate(0.7f);
                     if (result == TextToSpeech.LANG_MISSING_DATA
                             || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "TTS language is not supported");
@@ -85,6 +83,13 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnCorrec
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void playSound(boolean correct) {
+        MediaPlayer mPlayer = MediaPlayer.create(this, correct ? R.raw.right : R.raw.wrong);
+        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mPlayer.start();
     }
 
     @Override

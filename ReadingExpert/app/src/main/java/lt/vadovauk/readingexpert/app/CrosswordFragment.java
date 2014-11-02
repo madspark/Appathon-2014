@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class CrosswordFragment extends Fragment {
@@ -21,7 +20,7 @@ public class CrosswordFragment extends Fragment {
     private String mQuestion;
     private String mAnswer;
 
-    private OnCorrectListener mListener;
+    private OnResultListener mListener;
 
     public static CrosswordFragment newInstance(String question, String answer) {
         CrosswordFragment fragment = new CrosswordFragment();
@@ -67,17 +66,16 @@ public class CrosswordFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent e) {
                 int action = e.getAction();
-                if (action == MotionEvent.ACTION_MOVE) {
+                if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
                     int position = grid.pointToPosition((int) e.getX(), (int) e.getY());
                     if (position != GridView.INVALID_POSITION) {
                         adapter.select(position);
                     }
                 } else if (action == MotionEvent.ACTION_UP) {
-                    if (adapter.checkCorrect()) {
-                        Toast.makeText(getActivity(), R.string.correct, Toast.LENGTH_SHORT).show();
+                    boolean correct = adapter.checkCorrect();
+                    mListener.playSound(correct);
+                    if (correct) {
                         nextButton.setVisibility(Button.VISIBLE);
-                    } else {
-                        Toast.makeText(getActivity(), R.string.incorrect, Toast.LENGTH_SHORT).show();
                     }
                 }
                 return true;
@@ -90,7 +88,7 @@ public class CrosswordFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mListener = (OnCorrectListener) activity;
+        mListener = (OnResultListener) activity;
     }
 
     @Override
@@ -99,7 +97,8 @@ public class CrosswordFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnCorrectListener {
+    public interface OnResultListener {
+        public void playSound(boolean correct);
         public void onCorrect();
     }
 

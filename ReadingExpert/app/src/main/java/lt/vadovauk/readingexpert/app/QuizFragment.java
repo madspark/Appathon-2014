@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class QuizFragment extends Fragment {
@@ -23,7 +23,7 @@ public class QuizFragment extends Fragment {
     private String mQuestion;
     private String mAnswer;
 
-    private CrosswordFragment.OnCorrectListener mListener;
+    private CrosswordFragment.OnResultListener mListener;
 
     public static QuizFragment newInstance(String question, String answer) {
         QuizFragment fragment = new QuizFragment();
@@ -55,6 +55,17 @@ public class QuizFragment extends Fragment {
         questionTextView.setText(mQuestion);
 
         final EditText answerEditText = (EditText) v.findViewById(R.id.answer_edit);
+
+        answerEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    checkClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         answerEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -63,7 +74,7 @@ public class QuizFragment extends Fragment {
                     @Override
                     public void run() {
                         if (hasFocus) {
-                            imm.showSoftInput(answerEditText, InputMethodManager.SHOW_IMPLICIT);
+                            imm.showSoftInput(answerEditText, 0);
                         } else {
                             imm.hideSoftInputFromWindow(answerEditText.getWindowToken(), 0);
                         }
@@ -77,22 +88,26 @@ public class QuizFragment extends Fragment {
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (answerEditText.getText().toString().toUpperCase().equals(mAnswer.toUpperCase())) {
-                    Toast.makeText(getActivity(), R.string.correct, Toast.LENGTH_SHORT).show();
-                    mListener.onCorrect();
-                } else {
-                    Toast.makeText(getActivity(), R.string.incorrect, Toast.LENGTH_SHORT).show();
-                }
+                checkClick();
             }
         });
 
         return v;
     }
 
+    private void checkClick() {
+        final EditText answerEditText = (EditText) getView().findViewById(R.id.answer_edit);
+        boolean correct = answerEditText.getText().toString().toUpperCase().equals(mAnswer.toUpperCase());
+        mListener.playSound(correct);
+        if (correct) {
+            mListener.onCorrect();
+        }
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mListener = (CrosswordFragment.OnCorrectListener) activity;
+        mListener = (CrosswordFragment.OnResultListener) activity;
     }
 
     @Override
