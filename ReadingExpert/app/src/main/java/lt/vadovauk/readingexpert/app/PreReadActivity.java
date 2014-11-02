@@ -3,6 +3,7 @@ package lt.vadovauk.readingexpert.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +17,13 @@ import lt.vadovauk.readingexpert.app.domain.Story;
 public class PreReadActivity extends Activity {
     Story story;
     float rating;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +44,7 @@ public class PreReadActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PreReadActivity.this, ReadActivity.class);
-                intent.putExtra("content", story.getContent());
-                intent.putExtra("id", story.getApiId());
+                intent.putExtra("story", story);
 
                 startActivity(intent);
                 finish();
@@ -49,5 +56,7 @@ public class PreReadActivity extends Activity {
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setRating(rating);
+
+        getActionBar().setTitle(story.getTitle());
     }
 }

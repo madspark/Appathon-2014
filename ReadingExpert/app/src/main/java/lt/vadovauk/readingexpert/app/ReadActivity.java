@@ -29,6 +29,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import lt.vadovauk.readingexpert.app.common.NetworkClient;
+import lt.vadovauk.readingexpert.app.domain.Story;
 import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
 public class ReadActivity extends Activity {
@@ -37,8 +38,7 @@ public class ReadActivity extends Activity {
     int adjusted_delay;
 
 
-
-    String content = "Once upon a time there were three little pigs and the time came for them to leave home and seek their fortunes. Before they left, their mother told them \" Whatever you do , do it the best that you can because that's the way to get along in the world.";
+    Story story;
     int line = 0;
     TextView readLineTxt1;
     TextView tvDefTitle;
@@ -59,12 +59,11 @@ public class ReadActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
 
-
-        content = getIntent().getStringExtra("content");
-        id = getIntent().getIntExtra("id", 1);
-        int level = getIntent().getIntExtra("id", 1);
+        story = (Story) getIntent().getSerializableExtra("story");
+        int level = story.getApiId();
 
         adjusted_delay = 5000 - (level - 1) * 500;
+        getActionBar().setTitle(story.getTitle());
 
         readLineTxt1 = (TextView) findViewById(R.id.read_line_txt1);
         bPrevious = (Button) findViewById(R.id.previous_btn);
@@ -73,7 +72,7 @@ public class ReadActivity extends Activity {
         tvDefBody = (TextView) findViewById(R.id.tv_def_body);
         cardView = (CardView) findViewById(R.id.card);
 
-        lines = DataHelper.getLines(content, readLineTxt1);
+        lines = DataHelper.getLines(story.getContent(), readLineTxt1);
 
         timer = new Timer();
         timerTask = generateTask();
