@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
@@ -156,7 +157,6 @@ public class ReadActivity extends Activity {
             String possibleWord = text.substring(start, end);
             if (Character.isLetterOrDigit(possibleWord.charAt(0))) {
                 ClickableSpan clickSpan = getClickableSpan(possibleWord);
-
                 spans.setSpan(clickSpan, start, end,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
@@ -176,7 +176,26 @@ public class ReadActivity extends Activity {
                 Log.d("tapped on:", mWord);
                 Toast.makeText(widget.getContext(), mWord, Toast.LENGTH_SHORT)
                         .show();
+                //pauses the reading when a word is clicked.
+                if(isPaused){ //already paused, button should resume
+                    timerTask = generateTask();
+                    timer.scheduleAtFixedRate(timerTask, 0, DELAY);
+                    isPaused = false;
+                    bPause.setText("Pause");
+                } else {
+                    timerTask.cancel();
+                    isPaused = true;
+                    bPause.setText("Play");
+                }
+            }
+
+            public void updateDrawState(TextPaint ds) {
+                //super.updateDrawState(ds);
             }
         };
     }
+
+
+
+
 }

@@ -1,14 +1,15 @@
 package lt.vadovauk.readingexpert.app;
 
 import android.app.Activity;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class QuizFragment extends Fragment {
@@ -47,11 +48,20 @@ public class QuizFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_quiz, container, false);
 
-        final Button nextButton = (Button) v.findViewById(R.id.next_button);
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        TextView questionTextView = (TextView) v.findViewById(R.id.question_text);
+        questionTextView.setText(mQuestion);
+
+        final EditText answerEditText = (EditText) v.findViewById(R.id.answer_edit);
+
+        Button checkButton = (Button) v.findViewById(R.id.check_button);
+        checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onCorrect();
+                if (answerEditText.getText().toString().toUpperCase().equals(mAnswer.toUpperCase())) {
+                    mListener.onCorrect();
+                } else {
+                    Toast.makeText(getActivity(), R.string.incorrect, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
