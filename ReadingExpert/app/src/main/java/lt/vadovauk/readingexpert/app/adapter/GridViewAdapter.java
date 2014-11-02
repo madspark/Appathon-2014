@@ -68,7 +68,7 @@ public class GridViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.storyTitleTxt.setText("LEVEL " + position);
+        holder.storyTitleTxt.setText("LEVEL " + (position + 1));
         Picasso.with(activity).load(stories.get(position).getImageSource()).into(holder.storyImg);
 
         if (parsedValues.contains(stories.get(position).getApiId()) || position == 0) {
