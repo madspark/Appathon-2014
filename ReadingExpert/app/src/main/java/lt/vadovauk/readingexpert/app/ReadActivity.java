@@ -129,7 +129,7 @@ public class ReadActivity extends Activity {
                     init(readLineTxt1, lines.get(line));
                     bPause.setText("Play");
                 }
-                if(progressBar.getProgress() > 0){
+                if (progressBar.getProgress() > 0) {
                     progressBar.setProgress(line * 100 / lines.size());
                 }
             }
@@ -168,15 +168,7 @@ public class ReadActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (line < lines.size()) {
-                            incrementLine();
-                        } else {
-                            Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
-                            intent.putExtra("id", id);
-                            startActivity(intent);
-                            finish();
-                            timerTask.cancel();
-                        }
+                        incrementLine();
                     }
                 });
             }
@@ -184,11 +176,18 @@ public class ReadActivity extends Activity {
     }
 
     private void incrementLine() {
-
-        init(readLineTxt1, lines.get(line));
-        line++;
-        if (progressBar.getProgress() < 100) {
-            progressBar.setProgress(line * 100 / lines.size());
+        if (line < lines.size()) {
+            init(readLineTxt1, lines.get(line));
+            line++;
+            if (progressBar.getProgress() < 100) {
+                progressBar.setProgress(line * 100 / lines.size());
+            }
+        } else {
+            Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
+            intent.putExtra("id", id);
+            startActivity(intent);
+            finish();
+            timerTask.cancel();
         }
     }
 
