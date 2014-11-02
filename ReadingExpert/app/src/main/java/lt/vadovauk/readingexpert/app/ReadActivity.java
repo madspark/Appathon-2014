@@ -62,9 +62,9 @@ public class ReadActivity extends Activity {
 
         content = getIntent().getStringExtra("content");
         id = getIntent().getIntExtra("id", 1);
-        int level = getIntent().getIntExtra("id", 1);
+        int level = getIntent().getIntExtra("level", 1);
 
-        adjusted_delay = 5000 - (level - 1) * 500;
+        adjusted_delay = 7000 - (level - 1) * 500;
 
         readLineTxt1 = (TextView) findViewById(R.id.read_line_txt1);
         bPrevious = (Button) findViewById(R.id.previous_btn);
