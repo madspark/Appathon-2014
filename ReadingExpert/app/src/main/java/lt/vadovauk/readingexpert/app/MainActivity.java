@@ -68,11 +68,6 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
-        } else if (id == R.id.action_quiz) {
-            Intent intent = new Intent(MainActivity.this, QuizActivity.class);
-            intent.putExtra("id", 6);
-            startActivity(intent);
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
