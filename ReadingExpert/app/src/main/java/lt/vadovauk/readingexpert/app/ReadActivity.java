@@ -55,6 +55,12 @@ public class ReadActivity extends Activity {
     int id;
     private TextToSpeech mTTS;
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+        timerTask.cancel();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,7 +226,7 @@ public class ReadActivity extends Activity {
 
             @Override
             public void onClick(View widget) {
-                Log.d("tapped on:", mWord);
+                //Log.d("tapped on:", mWord);
                 getDefinition(mWord);
                 if (isPaused) {
                     //already paused, do nothing
