@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
-import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
@@ -134,6 +133,7 @@ public class ReadActivity extends Activity {
             String possibleWord = text.substring(start, end);
             if (Character.isLetterOrDigit(possibleWord.charAt(0))) {
                 ClickableSpan clickSpan = getClickableSpan(possibleWord);
+
                 spans.setSpan(clickSpan, start, end,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
@@ -153,14 +153,6 @@ public class ReadActivity extends Activity {
                 Toast.makeText(widget.getContext(), mWord, Toast.LENGTH_SHORT)
                         .show();
             }
-
-            public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
-            }
         };
     }
-
-
-
-
 }
