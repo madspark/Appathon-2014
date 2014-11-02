@@ -66,7 +66,7 @@ public class CrosswordFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent e) {
                 int action = e.getAction();
-                if (action == MotionEvent.ACTION_MOVE) {
+                if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
                     int position = grid.pointToPosition((int) e.getX(), (int) e.getY());
                     if (position != GridView.INVALID_POSITION) {
                         adapter.select(position);
