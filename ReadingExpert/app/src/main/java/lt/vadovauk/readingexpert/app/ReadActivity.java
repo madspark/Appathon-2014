@@ -50,6 +50,7 @@ public class ReadActivity extends Activity {
     String id;
     private ToolTipView myToolTipView;
     ToolTipRelativeLayout toolTipRelativeLayout;
+    ToolTip toolTip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,16 +118,17 @@ public class ReadActivity extends Activity {
         });
 
         toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
-
-        showToolTip("tip");
     }
 
     private void showToolTip(String tip) {
-        ToolTip toolTip = new ToolTip()
+        if (myToolTipView != null)
+            myToolTipView.remove();
+        toolTip = new ToolTip()
                 .withText(tip)
                 .withColor(Color.RED)
                 .withShadow();
         myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.read_line_txt1));
+
     }
 
     private TimerTask generateTask() {
@@ -176,6 +178,7 @@ public class ReadActivity extends Activity {
     private ClickableSpan getClickableSpan(final String word) {
         return new ClickableSpan() {
             final String mWord;
+
             {
                 mWord = word;
             }
