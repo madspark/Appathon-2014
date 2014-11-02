@@ -52,5 +52,4 @@
         android:layout_below="@+id/story_description_txt"
         android:layout_centerHorizontal="true" />
 
-
 </RelativeLayout>

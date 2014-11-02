@@ -3,6 +3,7 @@ package lt.vadovauk.readingexpert.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class ReadActivity extends Activity {
     TextView readLineTxt;
     ArrayList<String> lines;
     String id;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class ReadActivity extends Activity {
         readLineTxt = (TextView) findViewById(R.id.read_line_txt);
         lines = DataHelper.getLines(content);
 
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
         final Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -39,6 +43,9 @@ public class ReadActivity extends Activity {
                         if (line < lines.size()) {
                             readLineTxt.setText(lines.get(line));
                             line++;
+                            if (progressBar.getProgress() < 100) {
+                                progressBar.setProgress(line * 100 / lines.size());
+                            }
                         } else {
                             Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
                             intent.putExtra("id", id);
@@ -50,5 +57,7 @@ public class ReadActivity extends Activity {
                 });
             }
         }, 0, 1000);
+
+
     }
 }

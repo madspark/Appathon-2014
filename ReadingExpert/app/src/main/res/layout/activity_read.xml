@@ -38,4 +38,11 @@
         android:layout_alignBottom="@+id/previous_btn"
         android:text="Pause"></Button>
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerVertical="true" />
+
 </RelativeLayout>
