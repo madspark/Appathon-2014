@@ -14,22 +14,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class QuizFragment extends Fragment {
 
     private static final String ARG_QUESTION = "question";
-    private static final String ARG_ANSWER = "answer";
+    private static final String ARG_ANSWERS = "answers";
 
     private String mQuestion;
-    private String mAnswer;
+    private ArrayList<String> mAnswers;
 
     private CrosswordFragment.OnResultListener mListener;
 
-    public static QuizFragment newInstance(String question, String answer) {
+    public static QuizFragment newInstance(String question, ArrayList<String> answers) {
         QuizFragment fragment = new QuizFragment();
         Bundle args = new Bundle();
         args.putString(ARG_QUESTION, question);
-        args.putString(ARG_ANSWER, answer);
+        args.putStringArrayList(ARG_ANSWERS, answers);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,7 +44,10 @@ public class QuizFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mQuestion = getArguments().getString(ARG_QUESTION);
-            mAnswer = getArguments().getString(ARG_ANSWER);
+            mAnswers = getArguments().getStringArrayList(ARG_ANSWERS);
+            for (int i = 0; i < mAnswers.size(); i++) {
+                mAnswers.set(i, mAnswers.get(i).toUpperCase());
+            }
         }
     }
 
@@ -97,7 +102,8 @@ public class QuizFragment extends Fragment {
 
     private void checkClick() {
         final EditText answerEditText = (EditText) getView().findViewById(R.id.answer_edit);
-        boolean correct = answerEditText.getText().toString().toUpperCase().equals(mAnswer.toUpperCase());
+
+        boolean correct = mAnswers.contains(answerEditText.getText().toString().toUpperCase());
         mListener.playSound(correct);
         if (correct) {
             mListener.onCorrect();

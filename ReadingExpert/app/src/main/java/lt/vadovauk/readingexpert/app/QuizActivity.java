@@ -32,7 +32,6 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnResult
     private ArrayList<Question> mCrosswordQuestions;
     private ArrayList<Question> mQuizQuestions;
     private int mCurrentQuestionIndex;
-    private String mCurrentQuestion;
     private String mCurrentAnswer;
     private TextToSpeech mTTS;
     int id;
@@ -102,9 +101,8 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnResult
                 } else {
                     question = mCrosswordQuestions.get(mCurrentQuestionIndex / 2);
                 }
-                mCurrentQuestion = question.getQuestion();
                 mCurrentAnswer = question.getAnswer();
-                fragment = CrosswordFragment.newInstance(mCurrentQuestion, mCurrentAnswer);
+                fragment = CrosswordFragment.newInstance(question.getQuestion(), mCurrentAnswer);
             } else {
                 Question question;
                 if (mQuizQuestions.isEmpty()) {
@@ -112,9 +110,10 @@ public class QuizActivity extends Activity implements CrosswordFragment.OnResult
                 } else {
                     question = mQuizQuestions.get(mCurrentQuestionIndex / 2);
                 }
-                mCurrentQuestion = question.getQuestion();
+                ArrayList<String> answers = question.getOtherAnswers();
                 mCurrentAnswer = question.getAnswer();
-                fragment = QuizFragment.newInstance(mCurrentQuestion, mCurrentAnswer);
+                answers.add(mCurrentAnswer);
+                fragment = QuizFragment.newInstance(question.getQuestion(), answers);
             }
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, fragment)
