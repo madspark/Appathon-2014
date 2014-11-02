@@ -185,6 +185,7 @@ public class ReadActivity extends Activity {
         } else {
             Intent intent = new Intent(ReadActivity.this, QuizActivity.class);
             intent.putExtra("id", id);
+            intent.putExtra("story", story);
             startActivity(intent);
             finish();
             timerTask.cancel();
