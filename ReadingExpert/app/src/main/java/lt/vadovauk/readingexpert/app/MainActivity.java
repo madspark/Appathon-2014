@@ -9,16 +9,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
-import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
-import lt.vadovauk.readingexpert.app.common.NetworkClient;
-import lt.vadovauk.readingexpert.app.domain.Story;
+
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import lt.vadovauk.readingexpert.app.adapter.GridViewAdapter;
+import lt.vadovauk.readingexpert.app.common.NetworkClient;
+import lt.vadovauk.readingexpert.app.domain.Story;
 
 public class MainActivity extends Activity {
     Context context = MainActivity.this;
@@ -34,9 +38,15 @@ public class MainActivity extends Activity {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
-                intent.putExtra("story", stories.get(position));
-                startActivity(intent);
+
+                if (position == 0) {
+                    Intent intent = new Intent(MainActivity.this, PreReadActivity.class);
+                    intent.putExtra("story", stories.get(position));
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(context, "You need to complete other levels first", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
