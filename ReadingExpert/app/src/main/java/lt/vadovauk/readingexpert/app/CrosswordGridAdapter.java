@@ -129,13 +129,7 @@ public class CrosswordGridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView textView;
-        if (convertView == null) {  // if it's not recycled, initialize some attributes
-            textView = mViews[position];
-        } else {
-            textView = (TextView) convertView;
-        }
-        return textView;
+        return mViews[position];
     }
 
     public boolean checkCorrect() {
