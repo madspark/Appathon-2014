@@ -54,7 +54,7 @@ public class ReadActivity extends Activity {
     CardView cardView;
     int id;
     private TextToSpeech mTTS;
-    int currentLine = 0;
+    int currentLine = -1; // -1 so it gets incremented at the start of the reading
 
     @Override
     protected void onPause() {
@@ -175,7 +175,6 @@ public class ReadActivity extends Activity {
     private void incrementLine() {
         if (line < lines.size()) {
             line = currentLine + 1;
-            if(currentLine == 0)line = 0; // set line to 0 at the start of the app
             init(readLineTxt1, lines.get(line), line);
             if (progressBar.getProgress() < 100) {
                 progressBar.setProgress(line * 100 / lines.size());
