@@ -184,11 +184,8 @@ public class ReadActivity extends Activity {
             public void onClick(View widget) {
                 Log.d("tapped on:", mWord);
                 getDefinition(mWord);
-                if (isPaused) { //already paused, button should resume
-                    timerTask = generateTask();
-                    timer.scheduleAtFixedRate(timerTask, 0, DELAY);
-                    isPaused = false;
-                    bPause.setText("Pause");
+                if (isPaused) {
+                    //already paused, do nothing
                 } else {
                     timerTask.cancel();
                     isPaused = true;
