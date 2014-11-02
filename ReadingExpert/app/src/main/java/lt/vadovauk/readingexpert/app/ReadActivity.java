@@ -2,8 +2,9 @@ package lt.vadovauk.readingexpert.app;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
@@ -16,9 +17,6 @@ import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.nhaarman.supertooltips.ToolTip;
-import com.nhaarman.supertooltips.ToolTipRelativeLayout;
-import com.nhaarman.supertooltips.ToolTipView;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -35,11 +33,13 @@ import lt.vadovauk.readingexpert.app.helper.DataHelper;
 
 public class ReadActivity extends Activity {
 
-    final static int DELAY = 20; //milliseconds
+    final static int DELAY = 200; //milliseconds
 
     String content = "Once upon a time there were three little pigs and the time came for them to leave home and seek their fortunes. Before they left, their mother told them \" Whatever you do , do it the best that you can because that's the way to get along in the world.";
     int line = 0;
     TextView readLineTxt1;
+    TextView tvDefTitle;
+    TextView tvDefBody;
     ArrayList<String> lines;
     Button bPrevious;
     Button bPause;
@@ -47,10 +47,9 @@ public class ReadActivity extends Activity {
     TimerTask timerTask;
     Timer timer;
     ProgressBar progressBar;
+    CardView cardView;
     int id;
-    private ToolTipView myToolTipView;
-    ToolTipRelativeLayout toolTipRelativeLayout;
-    ToolTip toolTip;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,9 @@ public class ReadActivity extends Activity {
         readLineTxt1 = (TextView) findViewById(R.id.read_line_txt1);
         bPrevious = (Button) findViewById(R.id.previous_btn);
         bPause = (Button) findViewById(R.id.pause_btn);
-
+        tvDefTitle = (TextView) findViewById(R.id.tv_def_title);
+        tvDefBody = (TextView) findViewById(R.id.tv_def_body);
+        cardView = (CardView) findViewById(R.id.card);
 
         lines = DataHelper.getLines(content, readLineTxt1);
 
@@ -115,19 +116,8 @@ public class ReadActivity extends Activity {
             }
         });
 
-        toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
     }
 
-    private void showToolTip(String tip) {
-        if (myToolTipView != null)
-            myToolTipView.remove();
-        toolTip = new ToolTip()
-                .withText(tip)
-                .withColor(Color.RED)
-                .withShadow();
-        myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.read_line_txt1));
-
-    }
 
     private TimerTask generateTask() {
         return new TimerTask() {
@@ -200,7 +190,7 @@ public class ReadActivity extends Activity {
         };
     }
 
-    private void getDefinition(String mWord) {
+    private void getDefinition(final String mWord) {
         RequestParams rp = new RequestParams();
         rp.add("word", mWord);
         NetworkClient.get("/definitions/get_definition", rp, new JsonHttpResponseHandler() {
@@ -209,7 +199,10 @@ public class ReadActivity extends Activity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     String tip = response.getString("definition");
-                    showToolTip(tip);
+                    tvDefTitle.setText(Html.fromHtml("<u><i>" + mWord + "</i></u>"));
+                    tvDefBody.setText(tip);
+                    cardView.setVisibility(View.VISIBLE);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
